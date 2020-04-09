@@ -16,6 +16,9 @@
     "url": "https://github.com/hauptdigital/deepspeech-notes/issues"
   },
   "homepage": "https://github.com/hauptdigital/deepspeech-notes#readme",
+  "dependencies": {
+    "deepspeech": "^0.6.1"
+  },
   "devDependencies": {
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.1",
@@ -33,6 +36,5 @@
   "lint-staged": {
     "*.{js,jsx}": "eslint --fix",
     "*.{js,jsx,ts,tsx,md,html,css}": "prettier --write"
-  },
-  "dependencies": {}
+  }
 }
