@@ -1,6 +1,7 @@
 {
   "name": "deepspeech-notes",
   "version": "1.0.0",
+  "private": true,
   "description": "Create notes with speech-to-text technology",
   "main": "index.js",
   "scripts": {
@@ -11,7 +12,7 @@
     "url": "git+https://github.com/hauptdigital/deepspeech-notes.git"
   },
   "author": "Marc Haupt",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/hauptdigital/deepspeech-notes/issues"
   },
