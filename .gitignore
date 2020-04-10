@@ -15,10 +15,11 @@ pids
 *.pid.lock
 
 # Compiled binary addons (https://nodejs.org/api/addons.html)
-build/Release
+client/build
 
 # Dependency directories
 node_modules/
+client/node_modules/
 jspm_packages/
 
 # Yarn Integrity file
