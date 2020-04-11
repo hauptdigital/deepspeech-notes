@@ -11,8 +11,7 @@
     "prod-prebuild": "cd client && npm i",
     "prod-build": "cd client && npm run build && npm run build-storybook",
     "prod-client": "cd client && npm start",
-    "prod-server": "node server.js",
-    "prod": "concurrently --kill-others-on-fail \"npm run prod-server\" \"npm run prod-client\""
+    "prod-server": "node server.js"
   },
   "repository": {
     "type": "git",
