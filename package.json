@@ -5,7 +5,14 @@
   "description": "Create notes with speech-to-text technology",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev-client": "cd client && npm start",
+    "dev-server": "nodemon server.js",
+    "dev": "concurrently --kill-others-on-fail \"npm run dev-server\" \"npm run dev-client\"",
+    "prod-prebuild": "cd client && npm i",
+    "prod-build": "cd client && npm run build && npm run build-storybook",
+    "prod-client": "cd client && npm start",
+    "prod-server": "node server.js",
+    "prod": "concurrently --kill-others-on-fail \"npm run prod-server\" \"npm run prod-client\""
   },
   "repository": {
     "type": "git",
@@ -24,12 +31,14 @@
     "socket.io": "^2.3.0"
   },
   "devDependencies": {
+    "concurrently": "^5.1.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.19.0",
     "husky": "^4.2.3",
     "lint-staged": "^10.1.3",
+    "nodemon": "^2.0.3",
     "prettier": "^2.0.4"
   },
   "husky": {
