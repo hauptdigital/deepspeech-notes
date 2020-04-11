@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "Create notes with speech-to-text technology",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "dev-client": "cd client && npm start",
     "dev-server": "nodemon server.js",
