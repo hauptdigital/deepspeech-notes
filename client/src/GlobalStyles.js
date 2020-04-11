@@ -4,7 +4,7 @@ import { Global, css } from '@emotion/core';
 function GlobalStyle() {
   return (
     <Global
-      styles={css`
+      styles={(theme) => css`
         *,
         *:before,
         *:after {
@@ -14,6 +14,8 @@ function GlobalStyle() {
           font-size: 16px;
           margin: 0;
           font-family: 'Montserrat', sans-serif;
+          background-color: ${theme.colors.background};
+          color: ${theme.colors.primary};
         }
       `}
     />
