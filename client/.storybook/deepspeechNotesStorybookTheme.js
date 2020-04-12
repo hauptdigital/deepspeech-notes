@@ -1,11 +1,7 @@
 import { create } from '@storybook/theming/create';
-import theme from '../src/theme';
 
 export default create({
   base: 'light',
-
-  // UI
-  appContentBg: theme.colors.background,
 
   // Typography
   fontBase: '"MontSerrat", sans-serif',
