@@ -14,12 +14,12 @@ pids
 *.seed
 *.pid.lock
 
-# Compiled binary addons (https://nodejs.org/api/addons.html)
-build/Release
+# Production build directories
+**/build
+**/storybook-static
 
 # Dependency directories
-node_modules/
-jspm_packages/
+**/node_modules/
 
 # Yarn Integrity file
 .yarn-integrity
