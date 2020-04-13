@@ -9,9 +9,7 @@
     "dev-server": "nodemon server.js",
     "dev": "concurrently --kill-others-on-fail \"npm run dev-server\" \"npm run dev-client\"",
     "prod-prebuild": "cd client && npm i",
-    "prod-build": "cd client && npm run build && npm run build-storybook",
-    "prod-client": "cd client && npm start",
-    "prod-server": "node server.js"
+    "prod-build": "cd client && npm run build && npm run build-storybook"
   },
   "repository": {
     "type": "git",
