@@ -9,9 +9,7 @@
     "dev-server": "nodemon server.js",
     "dev": "concurrently --kill-others-on-fail \"npm run dev-server\" \"npm run dev-client\"",
     "prod-prebuild": "cd client && npm i",
-    "prod-build": "cd client && npm run build && npm run build-storybook",
-    "prod-client": "cd client && npm start",
-    "prod-server": "node server.js"
+    "prod-build": "cd client && npm run build && npm run build-storybook"
   },
   "repository": {
     "type": "git",
@@ -25,7 +23,7 @@
   "homepage": "https://github.com/hauptdigital/deepspeech-notes#readme",
   "dependencies": {
     "deepspeech": "^0.6.1",
-    "emotion-theming": "^10.0.27",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "node-vad": "^1.1.4",
     "socket.io": "^2.3.0"
