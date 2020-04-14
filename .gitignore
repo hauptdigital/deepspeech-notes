@@ -29,3 +29,6 @@ pids
 .env.test
 
 # project specific ignores
+# language model files
+src/deepspeech/model/*
+!src/deepspeech/model/README.md
