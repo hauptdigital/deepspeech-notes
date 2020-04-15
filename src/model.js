@@ -17,4 +17,6 @@ function createModel(modelDirectory, modelOptions) {
   return model;
 }
 
-exports.createModel = createModel;
+module.exports = {
+  createModel,
+};

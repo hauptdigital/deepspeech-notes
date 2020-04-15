@@ -3,9 +3,9 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const port = process.env.PORT || 8080;
-const { createModel } = require('./src/createModel');
+const { createModel } = require('./src/model');
 const { createHttpServer, startSocket } = require('./src/socket');
-const webSocketPort = process.env.SOCKET_PORT || 4000;
+const socketPort = process.env.SOCKET_PORT || 4000;
 
 // Language Model
 
@@ -26,8 +26,8 @@ const model = createModel(modelDirectory, modelOptions);
 
 const socket = createHttpServer();
 
-socket.listen(webSocketPort, 'localhost', () => {
-  console.log('Socket server listening on:', webSocketPort);
+socket.listen(socketPort, 'localhost', () => {
+  console.log(`SocketIO listening at http://localhost:${socketPort}`);
 });
 
 startSocket(socket);
@@ -49,5 +49,5 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.listen(port, () =>
-  console.log(`Example app listening at http://localhost:${port}`)
+  console.log(`Express server app listening at http://localhost:${port}`)
 );

@@ -1,15 +1,15 @@
 const http = require('http');
 const io = require('socket.io');
 
-exports.createHttpServer = () => {
+function createHttpServer() {
   return http.createServer(function (request, response) {
     response.writeHead(200);
-    response.write('websocket for microphone');
+    response.write('SocketIO for microphone');
     response.end();
   });
-};
+}
 
-exports.startSocket = (server) => {
+function startSocket(server) {
   const socket = io(server, {});
 
   socket.on('connection', function (socket) {
@@ -19,4 +19,9 @@ exports.startSocket = (server) => {
       console.log('client disconnected');
     });
   });
+}
+
+module.exports = {
+  createHttpServer,
+  startSocket,
 };
