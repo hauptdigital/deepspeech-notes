@@ -4,7 +4,7 @@ const path = require('path');
 const app = express();
 const port = process.env.PORT || 8080;
 const { createModel } = require('./src/createModel');
-const createHttpServer = require('./src/socket');
+const { createHttpServer, startSocket } = require('./src/socket');
 const webSocketPort = process.env.SOCKET_PORT || 4000;
 
 // Language Model
@@ -24,14 +24,13 @@ const model = createModel(modelDirectory, modelOptions);
 
 // Web microphone socket
 
-console.log(createHttpServer());
 const socket = createHttpServer();
 
 socket.listen(webSocketPort, 'localhost', () => {
   console.log('Socket server listening on:', webSocketPort);
 });
 
-module.exports = app;
+startSocket(socket);
 
 if (process.env.NODE_ENV === 'production') {
   // Serve any static files
