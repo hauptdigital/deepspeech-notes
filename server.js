@@ -3,7 +3,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const port = process.env.PORT || 8080;
-const { createModel } = require('./src/deepspeech/createModel');
+const { createModel } = require('./src/createModel');
 
 const modelDirectory = './src/deepspeech/model';
 
