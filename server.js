@@ -4,8 +4,12 @@ const path = require('path');
 const app = express();
 const port = process.env.PORT || 8080;
 const { createModel } = require('./src/createModel');
+const createHttpServer = require('./src/socket');
+const webSocketPort = process.env.SOCKET_PORT || 4000;
 
-const modelDirectory = './src/deepspeech/model';
+// Language Model
+
+const modelDirectory = './src/model';
 
 const modelOptions = {
   // The beam width used by the decoder. A larger beam width generates better results at the cost of decoding time.
@@ -17,6 +21,17 @@ const modelOptions = {
 };
 
 const model = createModel(modelDirectory, modelOptions);
+
+// Web microphone socket
+
+console.log(createHttpServer());
+const socket = createHttpServer();
+
+socket.listen(webSocketPort, 'localhost', () => {
+  console.log('Socket server listening on:', webSocketPort);
+});
+
+module.exports = app;
 
 if (process.env.NODE_ENV === 'production') {
   // Serve any static files
