@@ -30,5 +30,5 @@ pids
 
 # project specific ignores
 # language model files
-src/deepspeech/model/*
-!src/deepspeech/model/README.md
+src/model/*
+!src/model/README.md
