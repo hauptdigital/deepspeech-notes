@@ -4,6 +4,8 @@ const path = require('path');
 const app = express();
 const port = process.env.PORT || 8080;
 const { createModel } = require('./src/model');
+const fs = require('fs');
+const { processAudioStream, voiceActivityDetection } = require('./src/audio');
 const { createHttpServer, startSocket } = require('./src/socket');
 const socketPort = process.env.SOCKET_PORT || 4000;
 
@@ -21,6 +23,11 @@ const modelOptions = {
 };
 
 const model = createModel(modelDirectory, modelOptions);
+
+// Process audio demo file
+
+const audioStream = fs.createReadStream('./src/demo_pcm_s16_16000.raw');
+processAudioStream(audioStream, model, voiceActivityDetection);
 
 // Web microphone socket
 
