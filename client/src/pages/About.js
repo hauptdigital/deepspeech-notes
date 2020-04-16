@@ -2,7 +2,7 @@ import React from 'react';
 import Container from '../components/Container';
 import Title from '../components/Title';
 
-function Note() {
+function About() {
   return (
     <Container>
       <Title>About</Title>
@@ -10,4 +10,4 @@ function Note() {
   );
 }
 
-export default Note;
+export default About;

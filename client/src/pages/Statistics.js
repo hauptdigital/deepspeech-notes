@@ -2,7 +2,7 @@ import React from 'react';
 import Container from '../components/Container';
 import Title from '../components/Title';
 
-function Note() {
+function Statistics() {
   return (
     <Container>
       <Title>Statistics</Title>
@@ -10,4 +10,4 @@ function Note() {
   );
 }
 
-export default Note;
+export default Statistics;
