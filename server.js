@@ -7,7 +7,6 @@ const { createModel } = require('./src/model');
 const fs = require('fs');
 const { processAudioStream, voiceActivityDetection } = require('./src/audio');
 const { createHttpServer, startSocket } = require('./src/socket');
-const socketPort = process.env.SOCKET_PORT || 4000;
 
 // Language Model
 
@@ -24,20 +23,16 @@ const modelOptions = {
 
 const model = createModel(modelDirectory, modelOptions);
 
+// Web microphone socket
+
+const server = createHttpServer(app);
+
+startSocket(server);
+
 // Process audio demo file
 
 const audioStream = fs.createReadStream('./src/demo_pcm_s16_16000.raw');
 processAudioStream(audioStream, model, voiceActivityDetection);
-
-// Web microphone socket
-
-const socket = createHttpServer();
-
-socket.listen(socketPort, 'localhost', () => {
-  console.log(`SocketIO listening at http://localhost:${socketPort}`);
-});
-
-startSocket(socket);
 
 if (process.env.NODE_ENV === 'production') {
   // Serve any static files
@@ -55,6 +50,6 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-app.listen(port, () =>
+server.listen(port, () =>
   console.log(`Express server app listening at http://localhost:${port}`)
 );
