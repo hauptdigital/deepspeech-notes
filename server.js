@@ -1,13 +1,15 @@
 require('dotenv').config();
+const http = require('http');
 const express = require('express');
 const path = require('path');
-const app = express();
 const port = process.env.PORT || 8080;
+const socketPort = process.env.SOCKET_PORT || 4000;
 const { createModel } = require('./src/model');
 const fs = require('fs');
 const { processAudioStream, voiceActivityDetection } = require('./src/audio');
-const { createHttpServer, startSocket } = require('./src/socket');
-const socketPort = process.env.SOCKET_PORT || 4000;
+const { startSocket } = require('./src/socket');
+
+const app = express();
 
 // Language Model
 
@@ -29,17 +31,13 @@ const model = createModel(modelDirectory, modelOptions);
 const audioStream = fs.createReadStream('./src/demo_pcm_s16_16000.raw');
 processAudioStream(audioStream, model, voiceActivityDetection);
 
-// Web microphone socket
-
-const socket = createHttpServer();
-
-socket.listen(socketPort, 'localhost', () => {
-  console.log(`SocketIO listening at http://localhost:${socketPort}`);
-});
-
-startSocket(socket);
-
 if (process.env.NODE_ENV === 'production') {
+  // Web microphone socket
+
+  const server = http.createServer(app);
+
+  startSocket(server);
+
   // Serve any static files
   app.use(express.static(path.join(__dirname, 'client/build')));
   app.use(express.static(path.join(__dirname, 'client/storybook-static')));
@@ -53,8 +51,26 @@ if (process.env.NODE_ENV === 'production') {
   app.get('/storybook', (req, res) => {
     res.sendFile(path.join(__dirname, 'client/storybook-static', 'index.html'));
   });
-}
 
-app.listen(port, () =>
-  console.log(`Express server app listening at http://localhost:${port}`)
-);
+  server.listen(port, () =>
+    console.log(`Express server app listening at http://localhost:${port}`)
+  );
+} /* development */ else {
+  // Web microphone socket
+
+  const socket = http.createServer(function (req, res) {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.write('SocketIO');
+    res.end();
+  });
+
+  socket.listen(socketPort, 'localhost', () => {
+    console.log(`SocketIO listening at http://localhost:${socketPort}`);
+  });
+
+  startSocket(socket);
+
+  app.listen(port, () =>
+    console.log(`Express server app listening at http://localhost:${port}`)
+  );
+}
