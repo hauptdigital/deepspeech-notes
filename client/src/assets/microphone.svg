@@ -1,3 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="27" viewBox="0 0 22 27">
+  <linearGradient id="gradient-vertical" x2="0" y2="1">
+    <stop offset="0%" stop-color="var(--color-stop-1)" />
+    <stop offset="100%" stop-color="var(--color-stop-2)" />
+  </linearGradient>
   <path id="ic_mic_" data-name="ic_mic " d="M335.4,67.753a4.425,4.425,0,0,0,4.714-4.263V54.963a4.738,4.738,0,0,0-9.429,0v8.526A4.62,4.62,0,0,0,335.4,67.753Zm8.329-4.263c0,4.263-3.929,7.247-8.329,7.247s-8.329-2.984-8.329-7.247H324.4c0,4.832,4.243,8.811,9.429,9.521V77.7h3.143V73.011c5.186-.711,9.429-4.689,9.429-9.521Z" transform="translate(-324.4 -50.7)" fill="#036670"/>
 </svg>
