@@ -1,5 +1,4 @@
 import React from 'react';
-import Container from '../components/Container';
 import RecordButton from '../components/RecordButton';
 
 export default {
@@ -7,8 +6,4 @@ export default {
   component: RecordButton,
 };
 
-export const RecordNote = () => (
-  <Container>
-    <RecordButton />
-  </Container>
-);
+export const RecordNote = () => <RecordButton />;
