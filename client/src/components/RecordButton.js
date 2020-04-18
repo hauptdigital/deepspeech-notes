@@ -1,8 +1,8 @@
 import React from 'react';
-import { ReactComponent as MicrophoneIconSVG } from '../assets/microphone.svg';
+import { ReactComponent as MicrophoneIcon } from '../assets/microphone.svg';
 import styled from '@emotion/styled';
 
-const MicrophoneButtonGradientWrapper = styled.div`
+const RecordButtonGradientWrapper = styled.div`
   border-radius: 100px;
   width: 57px;
   height: 57px;
@@ -16,7 +16,7 @@ const MicrophoneButtonGradientWrapper = styled.div`
   transition: 0.5s;
 `;
 
-const MicrophoneButton = styled.button`
+const RecordButtonInput = styled.button`
   border-radius: 100px;
   border: none;
   width: 52px;
@@ -28,7 +28,7 @@ const MicrophoneButton = styled.button`
   cursor: pointer;
 `;
 
-const MicrophoneIcon = styled(MicrophoneIconSVG)`
+const RecordButtonIcon = styled(MicrophoneIcon)`
   & > #gradient-vertical {
     --color-stop-1: ${(props) => props.theme.colors.gradientStart};
     --color-stop-2: ${(props) => props.theme.colors.gradientStop};
@@ -43,11 +43,11 @@ const MicrophoneIcon = styled(MicrophoneIconSVG)`
 
 function RecordButton(props) {
   return (
-    <MicrophoneButtonGradientWrapper {...props}>
-      <MicrophoneButton>
-        <MicrophoneIcon {...props} />
-      </MicrophoneButton>
-    </MicrophoneButtonGradientWrapper>
+    <RecordButtonGradientWrapper {...props}>
+      <RecordButtonInput>
+        <RecordButtonIcon {...props} />
+      </RecordButtonInput>
+    </RecordButtonGradientWrapper>
   );
 }
 
