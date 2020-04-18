@@ -10,7 +10,10 @@ export default {
 export const Default = () => <RecordButton isRecording={false} />;
 export const Active = () => <RecordButton isRecording={true} />;
 
-RecordButton.propTypes = {
+Default.propTypes = {
   isRecording: PropTypes.bool.isRequired,
-  onClick: PropTypes.func,
+};
+
+Active.propTypes = {
+  isRecording: PropTypes.bool.isRequired,
 };
