@@ -24,8 +24,12 @@ const RecordButtonInput = styled.button`
   background-color: ${(props) => props.theme.colors.altTwo};
   display: flex;
   justify-content: center;
+  outline: none;
   transition: 0.5s;
   cursor: pointer;
+  &:focus {
+    box-shadow: 0 0 15px 0px #000000;
+  }
 `;
 
 const RecordButtonIcon = styled(MicrophoneIcon)`
