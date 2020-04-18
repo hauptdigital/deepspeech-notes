@@ -4,6 +4,7 @@ import { ThemeProvider } from 'emotion-theming';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import theme from './theme';
 import io from 'socket.io-client';
+import Container from './components/Container';
 import Notes from './pages/Notes';
 import About from './pages/About';
 import Statistics from './pages/Statistics';
@@ -24,19 +25,21 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
-      <Router>
-        <Switch>
-          <Route path="/">
-            <Notes />
-          </Route>
-          <Route path="/about">
-            <About />
-          </Route>
-          <Route path="/statistics">
-            <Statistics />
-          </Route>
-        </Switch>
-      </Router>
+      <Container>
+        <Router>
+          <Switch>
+            <Route path="/">
+              <Notes />
+            </Route>
+            <Route path="/about">
+              <About />
+            </Route>
+            <Route path="/statistics">
+              <Statistics />
+            </Route>
+          </Switch>
+        </Router>
+      </Container>
     </ThemeProvider>
   );
 }
