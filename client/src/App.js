@@ -7,11 +7,20 @@ import io from 'socket.io-client';
 import Notes from './pages/Notes';
 import About from './pages/About';
 import Statistics from './pages/Statistics';
+const port = process.env.PORT || 8080;
 
-const SocketPort = process.env.SOCKET_PORT || 4000;
+function getSocketURL() {
+  switch (process.env.NODE_ENV) {
+    case 'development':
+      return 'http://localhost:' + port;
+    case 'production':
+      return undefined;
+  }
+}
 
 function App() {
-  io('http://localhost:' + SocketPort);
+  io(getSocketURL());
+
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
