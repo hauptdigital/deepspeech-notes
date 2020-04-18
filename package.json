@@ -22,7 +22,6 @@
   },
   "homepage": "https://github.com/hauptdigital/deepspeech-notes#readme",
   "dependencies": {
-    "cors": "^2.8.5",
     "deepspeech": "^0.6.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
