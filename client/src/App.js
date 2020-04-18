@@ -7,12 +7,12 @@ import io from 'socket.io-client';
 import Notes from './pages/Notes';
 import About from './pages/About';
 import Statistics from './pages/Statistics';
-const port = process.env.PORT || 8080;
+const port = process.env.SOCKET_PORT || 4000;
 
 function getSocketURL() {
   switch (process.env.NODE_ENV) {
     case 'development':
-      return 'http://localhost:' + port;
+      return 'localhost:' + port;
     case 'production':
       return undefined;
   }
