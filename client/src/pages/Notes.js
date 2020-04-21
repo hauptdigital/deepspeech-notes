@@ -7,7 +7,6 @@ function Notes() {
 
   function handleRecordButtonClick() {
     setIsRecording(!isRecording);
-    console.log(isRecording);
   }
 
   return (

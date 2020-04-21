@@ -28,7 +28,7 @@ function App() {
       <Container>
         <Router>
           <Switch>
-            <Route path="/">
+            <Route path="/" exact>
               <Notes />
             </Route>
             <Route path="/about">
