@@ -1,13 +1,8 @@
 import React from 'react';
-import Container from '../components/Container';
 import Title from '../components/Title';
 
 function Statistics() {
-  return (
-    <Container>
-      <Title>Statistics</Title>
-    </Container>
-  );
+  return <Title>Statistics</Title>;
 }
 
 export default Statistics;

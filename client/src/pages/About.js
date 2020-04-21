@@ -1,13 +1,8 @@
 import React from 'react';
-import Container from '../components/Container';
 import Title from '../components/Title';
 
 function About() {
-  return (
-    <Container>
-      <Title>About</Title>
-    </Container>
-  );
+  return <Title>About</Title>;
 }
 
 export default About;
