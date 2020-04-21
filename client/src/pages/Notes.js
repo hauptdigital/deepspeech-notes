@@ -1,6 +1,7 @@
 import React from 'react';
 import Title from '../components/Title';
 import RecordButton from '../components/RecordButton';
+import startRecording from '../utils/audio';
 
 function Notes() {
   const [isRecording, setIsRecording] = React.useState(false);
@@ -12,10 +13,7 @@ function Notes() {
   return (
     <>
       <Title>Notes</Title>
-      <RecordButton
-        onClick={handleRecordButtonClick}
-        isRecording={isRecording}
-      />
+      <RecordButton onClick={startRecording} isRecording={isRecording} />
     </>
   );
 }
