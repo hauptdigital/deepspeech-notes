@@ -100,10 +100,9 @@ function addBufferedSilence(data) {
   let audioBuffer;
   if (silenceBuffers.length) {
     silenceBuffers.push(data);
-    let length = 0;
-    silenceBuffers.forEach(function (buf) {
-      length += buf.length;
-    });
+    const length = silenceBuffers.reduce(function (length, buffer) {
+      return length + buffer.length;
+    }, 0);
     audioBuffer = Buffer.concat(silenceBuffers, length);
     silenceBuffers = [];
   } else {
