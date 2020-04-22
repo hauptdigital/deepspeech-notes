@@ -37,7 +37,7 @@ function processAudioStream(data, callback) {
   // timeout after 1s of inactivity
   clearTimeout(endTimeout);
   endTimeout = setTimeout(function () {
-    console.log('timeout');
+    console.log('\n *** timeout *** \n');
     resetAudioStream();
   }, 1000);
 }
@@ -54,7 +54,7 @@ function endAudioStream(callback) {
 
 function resetAudioStream() {
   clearTimeout(endTimeout);
-  console.log('[reset]');
+  console.log('\n *** reset *** \n');
   intermediateDecode(); // ignore results
   recordedChunks = 0;
   silenceStart = null;

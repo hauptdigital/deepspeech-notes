@@ -2,7 +2,6 @@ const io = require('socket.io');
 const {
   createStream,
   processAudioStream,
-  endAudioStream,
   resetAudioStream,
 } = require('./audio.js');
 
@@ -10,7 +9,7 @@ function initSocket(server) {
   const socket = io(server, {});
 
   socket.on('connection', function (socket) {
-    console.log('client connected');
+    console.log('\n *** client connected *** \n');
 
     createStream();
 
@@ -20,18 +19,12 @@ function initSocket(server) {
       });
     });
 
-    socket.on('stream-end', function () {
-      endAudioStream((results) => {
-        socket.emit('recognize', results);
-      });
-    });
-
     socket.on('stream-reset', function () {
       resetAudioStream();
     });
 
     socket.once('disconnect', () => {
-      console.log('client disconnected');
+      console.log('\n *** client disconnected *** \n');
     });
   });
 }

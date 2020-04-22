@@ -14,10 +14,11 @@ let audioContext;
 let mediaStream;
 let mediaStreamSource;
 let audioProcessor;
+let socket;
 
 async function startRecording() {
   // Connect to socket
-  const socket = io(getSocketURL());
+  socket = io(getSocketURL());
 
   ///*** Setup audio context and creation of mono audio buffer ***///
   // Get AudioContext
@@ -59,6 +60,9 @@ async function startRecording() {
 
 function stopRecording() {
   // Stop recording
+  socket.emit('stream-reset');
+  socket.disconnect();
+
   if (mediaStream) {
     mediaStream.getTracks()[0].stop();
   }
