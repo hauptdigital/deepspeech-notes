@@ -71,13 +71,12 @@ function processSilence(data, callback) {
     if (silenceStart === null) {
       silenceStart = now;
     } else if (now - silenceStart > SILENCE_THRESHOLD) {
-        silenceStart = null;
-        console.log('[end]');
-        let results = intermediateDecode();
-        if (results) {
-          if (callback) {
-            callback(results);
-          }
+      silenceStart = null;
+      console.log('[end]');
+      let results = intermediateDecode();
+      if (results) {
+        if (callback) {
+          callback(results);
         }
       }
     }
