@@ -1,5 +1,5 @@
 import io from 'socket.io-client';
-const port = process.env.SOCKET_PORT || 4000;
+const port = process.env.REACT_APP_SOCKET_PORT || 4000;
 
 function getSocketURL() {
   switch (process.env.NODE_ENV) {
