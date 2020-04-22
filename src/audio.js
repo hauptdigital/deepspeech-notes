@@ -106,7 +106,9 @@ function addBufferedSilence(data) {
     });
     audioBuffer = Buffer.concat(silenceBuffers, length);
     silenceBuffers = [];
-  } else audioBuffer = data;
+  } else {
+    audioBuffer = data;
+  }
   return audioBuffer;
 }
 
