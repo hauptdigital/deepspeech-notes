@@ -67,11 +67,10 @@ function processSilence(data, callback) {
 
     feedAudioContent(data);
 
+    const now = new Date().getTime();
     if (silenceStart === null) {
-      silenceStart = new Date().getTime();
-    } else {
-      let now = new Date().getTime();
-      if (now - silenceStart > SILENCE_THRESHOLD) {
+      silenceStart = now;
+    } else if (now - silenceStart > SILENCE_THRESHOLD) {
         silenceStart = null;
         console.log('[end]');
         let results = intermediateDecode();
