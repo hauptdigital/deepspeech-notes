@@ -49,7 +49,7 @@ const RecordButtonIcon = styled(MicrophoneIcon)`
 function RecordButton(props) {
   return (
     <RecordButtonGradientWrapper isRecording={props.isRecording}>
-      <RecordButtonInput onClick={props.handleRecordButtonClick}>
+      <RecordButtonInput onClick={props.onRecordButtonClick}>
         <RecordButtonIcon isRecording={props.isRecording} />
       </RecordButtonInput>
     </RecordButtonGradientWrapper>
@@ -58,7 +58,7 @@ function RecordButton(props) {
 
 RecordButton.propTypes = {
   isRecording: PropTypes.bool,
-  handleRecordButtonClick: PropTypes.func,
+  onRecordButtonClick: PropTypes.func,
 };
 
 export default RecordButton;

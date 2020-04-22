@@ -32,7 +32,7 @@ function Notes() {
       <div>{isRecording ? 'listening...' : ''}</div>
       <RecordButton
         isRecording={isRecording}
-        handleRecordButtonClick={handleRecordButtonClick}
+        onRecordButtonClick={handleRecordButtonClick}
       />
     </>
   );
