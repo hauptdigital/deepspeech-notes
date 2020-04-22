@@ -13,7 +13,7 @@ const modelOptions = {
   LM_BETA: 1.85,
 };
 
-function createModel() {
+function createLanguageModel() {
   const modelPath = modelDirectory + '/output_graph.pbmm';
   const modelBinaryPath = modelDirectory + '/lm.binary';
   const triePath = modelDirectory + '/trie';
@@ -30,4 +30,4 @@ function createModel() {
   return model;
 }
 
-module.exports = createModel;
+module.exports = createLanguageModel;
