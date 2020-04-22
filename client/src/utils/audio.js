@@ -1,5 +1,4 @@
 import io from 'socket.io-client';
-import updateNoteContent from '../components/RecordButton';
 const port = process.env.SOCKET_PORT || 4000;
 
 function getSocketURL() {
@@ -80,7 +79,7 @@ function stopRecording() {
   if (audioContext) {
     audioContext.close();
   }
-  return { isRecording: false };
+  return false;
 }
 
 async function getMediastreamFromMicrophone() {
@@ -114,11 +113,6 @@ function processAudio(audioWorkletNode, downsampler, sampleRate, socket) {
     socket.emit('stream-data', event.data.buffer);
   };
 
-  // When socket receives recognize, update note content
-  socket.on('recognize', (results) => {
-    console.log('recognized:', results);
-    updateNoteContent(results);
-  });
   return audioWorkletNode;
 }
 

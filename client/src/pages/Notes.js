@@ -10,12 +10,8 @@ function Notes() {
   function handleRecordButtonClick() {
     if (!isRecording) {
       setIsRecording(startRecording());
-      const socket = getSocket();
-      socket.on('recognize', (results) => {
-        updateNoteContent(results.text);
-      });
     } else {
-      setIsRecording(stopRecording().isRecording);
+      setIsRecording(stopRecording());
     }
   }
 
@@ -24,6 +20,23 @@ function Notes() {
       return noteContent + ' ' + text;
     });
   }
+
+  React.useEffect(() => {
+    if (!isRecording) {
+      return;
+    }
+
+    function handleRecognize(recognized) {
+      updateNoteContent(recognized.text);
+    }
+
+    const socket = getSocket();
+    socket.on('recognize', handleRecognize);
+
+    return () => {
+      socket.removeListener('recognize', handleRecognize);
+    };
+  }, [isRecording]);
 
   return (
     <>
