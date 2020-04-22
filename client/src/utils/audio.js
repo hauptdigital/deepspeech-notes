@@ -2,12 +2,9 @@ import io from 'socket.io-client';
 const port = process.env.REACT_APP_SOCKET_PORT || 4000;
 
 function getSocketURL() {
-  switch (process.env.NODE_ENV) {
-    case 'development':
-      return 'localhost:' + port;
-    case 'production':
-      return undefined;
-  }
+  return process.env.NODE_ENV === 'development'
+    ? 'localhost:' + port
+    : undefined;
 }
 
 let audioContext;
