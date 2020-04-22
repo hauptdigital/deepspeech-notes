@@ -3,7 +3,7 @@ const VAD = require('node-vad');
 
 const voiceActivityDetection = new VAD(VAD.Mode.VERY_AGGRESSIVE);
 
-let SILENCE_THRESHOLD = 200; // how many milliseconds of inactivity before processing the audio
+const SILENCE_THRESHOLD = 200; // how many milliseconds of inactivity before processing the audio
 
 let model = createModel();
 
