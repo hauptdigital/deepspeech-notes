@@ -19,7 +19,6 @@ let inputSampleRate;
 let inputBuffer = [];
 
 function init(x) {
-  console.log('init');
   inputSampleRate = x;
 }
 
