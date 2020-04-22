@@ -67,11 +67,10 @@ function processSilence(data, callback) {
 
     feedAudioContent(data);
 
+    const now = new Date().getTime();
     if (silenceStart === null) {
-      silenceStart = new Date().getTime();
-    } else {
-      let now = new Date().getTime();
-      if (now - silenceStart > SILENCE_THRESHOLD) {
+      silenceStart = now;
+    } else if (now - silenceStart > SILENCE_THRESHOLD) {
         silenceStart = null;
         console.log('[end]');
         let results = intermediateDecode();
@@ -101,13 +100,14 @@ function addBufferedSilence(data) {
   let audioBuffer;
   if (silenceBuffers.length) {
     silenceBuffers.push(data);
-    let length = 0;
-    silenceBuffers.forEach(function (buf) {
-      length += buf.length;
-    });
+    const length = silenceBuffers.reduce(function (length, buffer) {
+      return length + buffer.length;
+    }, 0);
     audioBuffer = Buffer.concat(silenceBuffers, length);
     silenceBuffers = [];
-  } else audioBuffer = data;
+  } else {
+    audioBuffer = data;
+  }
   return audioBuffer;
 }
 
