@@ -1,4 +1,5 @@
 import io from 'socket.io-client';
+import updateNoteContent from '../components/RecordButton';
 const port = process.env.SOCKET_PORT || 4000;
 
 function getSocketURL() {
@@ -16,6 +17,10 @@ let mediaStreamSource;
 let audioProcessor;
 let socket;
 
+function getSocket() {
+  return socket;
+}
+
 async function startRecording() {
   // Connect to socket
   socket = io(getSocketURL());
@@ -24,11 +29,14 @@ async function startRecording() {
   // Get AudioContext
   audioContext = await createAudioContext();
 
-  // Get mono audio buffer from audio context
-  const audioBufferMono = new AudioWorkletNode(audioContext, 'voice-processor');
+  // Create audio worklet node audio context using voice-processor
+  const audioWorkletNode = new AudioWorkletNode(
+    audioContext,
+    'voice-processor'
+  );
 
-  // Connect mono audio buffer to audioContext.destination
-  audioBufferMono.connect(audioContext.destination);
+  // Connect audio worklet node to audio context destination
+  audioWorkletNode.connect(audioContext.destination);
 
   ///*** Get media from microphone and create media stream ***///
   // Get mediaStream from microphone
@@ -46,7 +54,7 @@ async function startRecording() {
   ///*** Setup audio processing and connect media stream source to audio processor ***///
   // Create audio processor to
   audioProcessor = processAudio(
-    audioBufferMono,
+    audioWorkletNode,
     downsampler,
     sampleRate,
     socket
@@ -72,7 +80,7 @@ function stopRecording() {
   if (audioContext) {
     audioContext.close();
   }
-  return false;
+  return { isRecording: false };
 }
 
 async function getMediastreamFromMicrophone() {
@@ -92,12 +100,12 @@ async function createAudioContext() {
   return audioContext;
 }
 
-function processAudio(audioBufferMono, downsampler, sampleRate, socket) {
+function processAudio(audioWorkletNode, downsampler, sampleRate, socket) {
   // Initialize downsampler with sample rate
   downsampler.postMessage({ command: 'init', inputSampleRate: sampleRate });
 
   // When voice processor has message, process result buffer (event.data) in downsampler
-  audioBufferMono.port.onmessage = (event) => {
+  audioWorkletNode.port.onmessage = (event) => {
     downsampler.postMessage({ command: 'process', inputFrame: event.data });
   };
 
@@ -106,11 +114,12 @@ function processAudio(audioBufferMono, downsampler, sampleRate, socket) {
     socket.emit('stream-data', event.data.buffer);
   };
 
-  // When socket receives recognize, output results in console
+  // When socket receives recognize, update note content
   socket.on('recognize', (results) => {
     console.log('recognized:', results);
+    updateNoteContent(results);
   });
-  return audioBufferMono;
+  return audioWorkletNode;
 }
 
-export { startRecording, stopRecording };
+export { startRecording, stopRecording, getSocket };
