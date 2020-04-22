@@ -1,5 +1,6 @@
 import React from 'react';
 import { ReactComponent as MicrophoneIcon } from '../assets/microphone.svg';
+import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 
 const RecordButtonGradientWrapper = styled.div`
@@ -47,12 +48,17 @@ const RecordButtonIcon = styled(MicrophoneIcon)`
 
 function RecordButton(props) {
   return (
-    <RecordButtonGradientWrapper {...props}>
-      <RecordButtonInput>
-        <RecordButtonIcon {...props} />
+    <RecordButtonGradientWrapper isRecording={props.isRecording}>
+      <RecordButtonInput onClick={props.handleRecordButtonClick}>
+        <RecordButtonIcon isRecording={props.isRecording} />
       </RecordButtonInput>
     </RecordButtonGradientWrapper>
   );
 }
+
+RecordButton.propTypes = {
+  isRecording: PropTypes.bool,
+  handleRecordButtonClick: PropTypes.func,
+};
 
 export default RecordButton;

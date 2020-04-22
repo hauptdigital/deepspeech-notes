@@ -1,19 +1,26 @@
 import React from 'react';
 import Title from '../components/Title';
 import RecordButton from '../components/RecordButton';
-import startRecording from '../utils/audio';
+import { startRecording, stopRecording } from '../utils/audio';
 
 function Notes() {
   const [isRecording, setIsRecording] = React.useState(false);
 
   function handleRecordButtonClick() {
-    setIsRecording(!isRecording);
+    if (!isRecording) {
+      setIsRecording(startRecording());
+    } else {
+      setIsRecording(stopRecording());
+    }
   }
 
   return (
     <>
       <Title>Notes</Title>
-      <RecordButton onClick={startRecording} isRecording={isRecording} />
+      <RecordButton
+        isRecording={isRecording}
+        handleRecordButtonClick={handleRecordButtonClick}
+      />
     </>
   );
 }

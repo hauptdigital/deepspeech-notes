@@ -10,13 +10,18 @@ function getSocketURL() {
   }
 }
 
+let audioContext;
+let mediaStream;
+let mediaStreamSource;
+let audioProcessor;
+
 async function startRecording() {
   // Connect to socket
   const socket = io(getSocketURL());
 
   ///*** Setup audio context and creation of mono audio buffer ***///
   // Get AudioContext
-  const audioContext = await createAudioContext();
+  audioContext = await createAudioContext();
 
   // Get mono audio buffer from audio context
   const audioBufferMono = new AudioWorkletNode(audioContext, 'voice-processor');
@@ -26,10 +31,10 @@ async function startRecording() {
 
   ///*** Get media from microphone and create media stream ***///
   // Get mediaStream from microphone
-  const mediaStream = await getMediastreamFromMicrophone();
+  mediaStream = await getMediastreamFromMicrophone();
 
   // Create media stream source from microphone media stream
-  const mediaStreamSource = audioContext.createMediaStreamSource(mediaStream);
+  mediaStreamSource = audioContext.createMediaStreamSource(mediaStream);
 
   // Get sample rate from media stream source
   const sampleRate = mediaStreamSource.context.sampleRate;
@@ -39,7 +44,7 @@ async function startRecording() {
 
   ///*** Setup audio processing and connect media stream source to audio processor ***///
   // Create audio processor to
-  const processedAudio = processAudio(
+  audioProcessor = processAudio(
     audioBufferMono,
     downsampler,
     sampleRate,
@@ -47,15 +52,23 @@ async function startRecording() {
   );
 
   // Connect media stream source to audio processor
-  mediaStreamSource.connect(processedAudio);
+  mediaStreamSource.connect(audioProcessor);
+
+  return true;
 }
 
 function stopRecording() {
   // Stop recording
-}
-
-function stopMicrophone() {
-  // Start microphone
+  if (mediaStream) {
+    mediaStream.getTracks()[0].stop();
+  }
+  if (mediaStreamSource) {
+    mediaStreamSource.disconnect();
+  }
+  if (audioContext) {
+    audioContext.close();
+  }
+  return false;
 }
 
 async function getMediastreamFromMicrophone() {
@@ -96,4 +109,4 @@ function processAudio(audioBufferMono, downsampler, sampleRate, socket) {
   return audioBufferMono;
 }
 
-export default startRecording;
+export { startRecording, stopRecording };
