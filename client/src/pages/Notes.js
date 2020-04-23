@@ -2,6 +2,7 @@ import React from 'react';
 import NoteContainer from '../components/NoteContainer';
 import NoteTitle from '../components/NoteTitle';
 import NoteContent from '../components/NoteContent';
+import AudioVisualizer from '../components/AudioVisualizer';
 import RecordButton from '../components/RecordButton';
 import { startRecording, stopRecording, getSocket } from '../utils/audio';
 
@@ -67,7 +68,7 @@ function Notes() {
           placeholder="Note"
         />
       </NoteContainer>
-      <div>{isRecording ? 'listening...' : ''}</div>
+      <AudioVisualizer>{isRecording ? 'listening...' : ''}</AudioVisualizer>
       <RecordButton
         isRecording={isRecording}
         onRecordButtonClick={handleRecordButtonClick}
