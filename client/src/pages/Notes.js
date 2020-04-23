@@ -1,9 +1,10 @@
 import React from 'react';
 import Title from '../components/Title';
+import NoteContent from '../components/NoteContent';
 import RecordButton from '../components/RecordButton';
 import { startRecording, stopRecording, getSocket } from '../utils/audio';
 
-function Notes() {
+function Note() {
   const [isRecording, setIsRecording] = React.useState(false);
   const [noteContent, setNoteContent] = React.useState('');
 
@@ -40,8 +41,8 @@ function Notes() {
 
   return (
     <>
-      <Title>Notes</Title>
-      <div>{noteContent}</div>
+      <Title>Note</Title>
+      <NoteContent>{noteContent}</NoteContent>
       <div>{isRecording ? 'listening...' : ''}</div>
       <RecordButton
         isRecording={isRecording}
@@ -51,4 +52,4 @@ function Notes() {
   );
 }
 
-export default Notes;
+export default Note;
