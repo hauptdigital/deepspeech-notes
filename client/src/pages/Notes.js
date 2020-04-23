@@ -6,7 +6,7 @@ import { startRecording, stopRecording, getSocket } from '../utils/audio';
 
 function Notes() {
   const [isRecording, setIsRecording] = React.useState(false);
-  const [noteContent, setNoteContent] = React.useState('');
+  const [noteContent, setNoteContent] = React.useState('TEST Test');
 
   function handleRecordButtonClick() {
     if (!isRecording) {
@@ -22,6 +22,10 @@ function Notes() {
     });
   }
 
+  function handleNoteContentChange(event) {
+    setNoteContent(event.target.value);
+  }
+
   React.useEffect(() => {
     if (!isRecording) {
       return;
@@ -33,6 +37,9 @@ function Notes() {
 
     const socket = getSocket();
     socket.on('recognize', handleRecognize);
+    socket.on('recognize', (recognized) => {
+      console.log(recognized.text);
+    });
 
     return () => {
       socket.removeListener('recognize', handleRecognize);
@@ -42,7 +49,12 @@ function Notes() {
   return (
     <>
       <Title>Note</Title>
-      <NoteContent>{noteContent}</NoteContent>
+      <NoteContent
+        onChange={handleNoteContentChange}
+        disabled={isRecording}
+        value={noteContent}
+        placeholder="Note"
+      />
       <div>{isRecording ? 'listening...' : ''}</div>
       <RecordButton
         isRecording={isRecording}
