@@ -1,12 +1,13 @@
 import React from 'react';
-import Title from '../components/Title';
+import NoteTitle from '../components/NoteTitle';
 import NoteContent from '../components/NoteContent';
 import RecordButton from '../components/RecordButton';
 import { startRecording, stopRecording, getSocket } from '../utils/audio';
 
 function Notes() {
   const [isRecording, setIsRecording] = React.useState(false);
-  const [noteContent, setNoteContent] = React.useState('TEST Test');
+  const [noteTitle, setTitleContent] = React.useState('');
+  const [noteContent, setNoteContent] = React.useState('');
 
   function handleRecordButtonClick() {
     if (!isRecording) {
@@ -20,6 +21,10 @@ function Notes() {
     setNoteContent((noteContent) => {
       return noteContent + ' ' + text;
     });
+  }
+
+  function handleNoteTitleChange(event) {
+    setTitleContent(event.target.value);
   }
 
   function handleNoteContentChange(event) {
@@ -48,7 +53,11 @@ function Notes() {
 
   return (
     <>
-      <Title>Note</Title>
+      <NoteTitle
+        onChange={handleNoteTitleChange}
+        value={noteTitle}
+        placeholder="Title"
+      />
       <NoteContent
         onChange={handleNoteContentChange}
         disabled={isRecording}
