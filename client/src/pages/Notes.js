@@ -4,7 +4,7 @@ import NoteContent from '../components/NoteContent';
 import RecordButton from '../components/RecordButton';
 import { startRecording, stopRecording, getSocket } from '../utils/audio';
 
-function Note() {
+function Notes() {
   const [isRecording, setIsRecording] = React.useState(false);
   const [noteContent, setNoteContent] = React.useState('');
 
@@ -52,4 +52,4 @@ function Note() {
   );
 }
 
-export default Note;
+export default Notes;

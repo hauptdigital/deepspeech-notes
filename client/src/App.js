@@ -4,7 +4,7 @@ import { ThemeProvider } from 'emotion-theming';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import theme from './theme';
 import Container from './components/Container';
-import Note from './pages/Note';
+import Notes from './pages/Notes';
 import About from './pages/About';
 import Statistics from './pages/Statistics';
 
@@ -16,7 +16,7 @@ function App() {
         <Router>
           <Switch>
             <Route path="/" exact>
-              <Note />
+              <Notes />
             </Route>
             <Route path="/about">
               <About />
