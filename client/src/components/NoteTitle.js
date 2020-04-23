@@ -13,6 +13,7 @@ const NoteTitle = styled.input`
   padding: 1rem;
   width: 100%;
   max-width: 600px;
+  margin: 12.5px 0;
   &:focus {
     box-shadow: 0 0 0 2px ${(props) => props.theme.colors.altTwo};
   }

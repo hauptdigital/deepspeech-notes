@@ -8,10 +8,12 @@ const NoteContent = styled.textarea`
   border: none;
   outline: none;
   resize: none;
+  margin-bottom: 12.5px;
   border-radius: 5px;
   padding: 1rem;
   width: 100%;
   max-width: 600px;
+  flex-grow: 2;
   &:focus {
     box-shadow: 0 0 0 2px ${(props) => props.theme.colors.altTwo};
   }

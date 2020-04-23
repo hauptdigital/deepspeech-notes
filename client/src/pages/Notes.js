@@ -1,4 +1,5 @@
 import React from 'react';
+import NoteContainer from '../components/NoteContainer';
 import NoteTitle from '../components/NoteTitle';
 import NoteContent from '../components/NoteContent';
 import RecordButton from '../components/RecordButton';
@@ -53,17 +54,19 @@ function Notes() {
 
   return (
     <>
-      <NoteTitle
-        onChange={handleNoteTitleChange}
-        value={noteTitle}
-        placeholder="Title"
-      />
-      <NoteContent
-        onChange={handleNoteContentChange}
-        disabled={isRecording}
-        value={noteContent}
-        placeholder="Note"
-      />
+      <NoteContainer>
+        <NoteTitle
+          onChange={handleNoteTitleChange}
+          value={noteTitle}
+          placeholder="Title"
+        />
+        <NoteContent
+          onChange={handleNoteContentChange}
+          disabled={isRecording}
+          value={noteContent}
+          placeholder="Note"
+        />
+      </NoteContainer>
       <div>{isRecording ? 'listening...' : ''}</div>
       <RecordButton
         isRecording={isRecording}
