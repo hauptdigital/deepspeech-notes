@@ -5,6 +5,7 @@ const NoteTitle = styled.input`
   font-family: MontSerrat;
   font-weight: bold;
   color: ${(props) => props.theme.colors.secondary};
+  caret-color: ${(props) => props.theme.colors.secondary};
   background: transparent;
   border: none;
   outline: none;

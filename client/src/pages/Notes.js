@@ -2,26 +2,39 @@ import React from 'react';
 import NoteContainer from '../components/NoteContainer';
 import NoteTitle from '../components/NoteTitle';
 import NoteContent from '../components/NoteContent';
+import NoteContentReadOnly from '../components/NoteContentReadOnly';
 import AudioVisualizer from '../components/AudioVisualizer';
 import RecordButton from '../components/RecordButton';
 import { startRecording, stopRecording, getSocket } from '../utils/audio';
 
 function Notes() {
   const [isRecording, setIsRecording] = React.useState(false);
-  const [noteTitle, setTitleContent] = React.useState('');
-  const [noteContent, setNoteContent] = React.useState('');
+  const [noteTitle, setTitleContent] = React.useState();
+  const [noteContent, setNoteContent] = React.useState({
+    text: '',
+    recognizedText: '',
+  });
+  const placeholders = { title: 'Title', note: 'Note' };
 
   function handleRecordButtonClick() {
     if (!isRecording) {
       setIsRecording(startRecording());
     } else {
       setIsRecording(stopRecording());
+      setNoteContent({
+        text: noteContent.text + noteContent.recognizedText,
+        recognizedText: '',
+      });
     }
   }
 
-  function updateNoteContent(text) {
+  function addRecognizedText(recognizedText) {
     setNoteContent((noteContent) => {
-      return noteContent + ' ' + text;
+      const updatedNoteContent = {
+        text: noteContent.text.trim() + ' ' + noteContent.recognizedText.trim(),
+        recognizedText: ' ' + recognizedText,
+      };
+      return updatedNoteContent;
     });
   }
 
@@ -30,7 +43,7 @@ function Notes() {
   }
 
   function handleNoteContentChange(event) {
-    setNoteContent(event.target.value);
+    setNoteContent({ text: event.target.value, recognizedText: '' });
   }
 
   React.useEffect(() => {
@@ -39,14 +52,11 @@ function Notes() {
     }
 
     function handleRecognize(recognized) {
-      updateNoteContent(recognized.text);
+      addRecognizedText(recognized.text);
     }
 
     const socket = getSocket();
     socket.on('recognize', handleRecognize);
-    socket.on('recognize', (recognized) => {
-      console.log(recognized.text);
-    });
 
     return () => {
       socket.removeListener('recognize', handleRecognize);
@@ -59,14 +69,20 @@ function Notes() {
         <NoteTitle
           onChange={handleNoteTitleChange}
           value={noteTitle}
-          placeholder="Title"
+          placeholder={placeholders.title}
         />
-        <NoteContent
-          onChange={handleNoteContentChange}
-          disabled={isRecording}
-          value={noteContent}
-          placeholder="Note"
-        />
+        {isRecording ? (
+          <NoteContentReadOnly
+            noteContent={noteContent}
+            placeholder={placeholders.note}
+          />
+        ) : (
+          <NoteContent
+            onChange={handleNoteContentChange}
+            value={noteContent.text}
+            placeholder={placeholders.note}
+          />
+        )}
       </NoteContainer>
       <AudioVisualizer>{isRecording ? 'listening...' : ''}</AudioVisualizer>
       <RecordButton
