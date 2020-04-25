@@ -22,7 +22,7 @@ function Notes() {
     } else {
       setIsRecording(stopRecording());
       setNoteContent({
-        text: noteContent.text + noteContent.recognizedText,
+        text: noteContent.text.trim() + ' ' + noteContent.recognizedText.trim(),
         recognizedText: '',
       });
     }
