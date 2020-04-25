@@ -2,9 +2,10 @@ import React from 'react';
 import TextChunk from '../components/TextChunk';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+import { CSSTransitionGroup } from 'react-transition-group';
 
 const NoteContentTextFromAudio = styled.div`
-  font-size: 20px;
+  font-size: 24px;
   font-family: MontSerrat;
   color: ${(props) => props.theme.colors.primary};
   background: transparent;
@@ -29,10 +30,25 @@ const NoteContentTextFromAudio = styled.div`
 
 function NoteContentReadOnly(props) {
   return (
-    <NoteContentTextFromAudio>
-      <TextChunk>{props.noteContent.text}</TextChunk>
+    <NoteContentTextFromAudio placeholder={props.placeholder}>
+      {props.noteContent.text !== '' && (
+        <TextChunk>{props.noteContent.text}</TextChunk>
+      )}
       {props.noteContent.recognizedText !== '' && (
-        <TextChunk isNew={true}>{props.noteContent.recognizedText}</TextChunk>
+        <CSSTransitionGroup
+          transitionName="fadeIn"
+          transitionAppear={true}
+          transitionLeave={false}
+          transitionEnterTimeout={300}
+          transitionAppearTimeout={300}
+        >
+          <TextChunk
+            key={props.noteContent.text + props.noteContent.recognizedText}
+            isNew={true}
+          >
+            {props.noteContent.recognizedText}
+          </TextChunk>
+        </CSSTransitionGroup>
       )}
     </NoteContentTextFromAudio>
   );
@@ -43,6 +59,7 @@ NoteContentReadOnly.propTypes = {
     text: PropTypes.string,
     recognizedText: PropTypes.string,
   }),
+  placeholder: PropTypes.string,
 };
 
 export default NoteContentReadOnly;

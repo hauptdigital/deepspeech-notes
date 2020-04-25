@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 const NoteContent = styled.textarea`
-  font-size: 20px;
+  font-size: 24px;
   font-family: MontSerrat;
   color: ${(props) => props.theme.colors.primary};
   caret-color: ${(props) => props.theme.colors.secondary};
