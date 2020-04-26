@@ -113,4 +113,10 @@ function processAudio(audioWorkletNode, downsampler, sampleRate, socket) {
   return audioWorkletNode;
 }
 
-export { startRecording, stopRecording, getSocket, audioContext };
+export {
+  startRecording,
+  stopRecording,
+  getSocket,
+  audioContext,
+  mediaStreamSource,
+};
