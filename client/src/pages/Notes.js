@@ -16,11 +16,11 @@ function Notes() {
   });
   const placeholders = { title: 'Title', note: 'Note' };
 
-  function handleRecordButtonClick() {
+  async function handleRecordButtonClick() {
     if (!isRecording) {
-      setIsRecording(startRecording());
+      setIsRecording(await startRecording());
     } else {
-      setIsRecording(stopRecording());
+      setIsRecording(await stopRecording());
       setNoteContent({
         text: noteContent.text.trim() + ' ' + noteContent.recognizedText.trim(),
         recognizedText: '',
@@ -84,7 +84,7 @@ function Notes() {
           />
         )}
       </NoteContainer>
-      <AudioVisualizer>{isRecording ? 'listening...' : ''}</AudioVisualizer>
+      <AudioVisualizer isRecording={isRecording} />
       <RecordButton
         isRecording={isRecording}
         onRecordButtonClick={handleRecordButtonClick}
