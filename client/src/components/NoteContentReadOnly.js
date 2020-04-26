@@ -2,22 +2,16 @@ import React from 'react';
 import TextChunk from '../components/TextChunk';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+import noteBaseStyles from './noteBaseStyles';
 import { CSSTransitionGroup } from 'react-transition-group';
 
 const NoteContentTextFromAudio = styled.div`
+  ${noteBaseStyles};
   font-size: 24px;
-  font-family: MontSerrat;
   color: ${(props) => props.theme.colors.primary};
-  background: transparent;
-  border: none;
-  outline: none;
-  resize: none;
   margin-bottom: 12.5px;
-  border-radius: 5px;
-  padding: 1rem;
-  width: 100%;
-  max-width: 600px;
   flex-grow: 2;
+  &:focus,
   &:hover {
     box-shadow: 0 0 0 2px ${(props) => props.theme.colors.altTwo};
   }

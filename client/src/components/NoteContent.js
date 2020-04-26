@@ -1,19 +1,12 @@
 import styled from '@emotion/styled';
+import noteBaseStyles from './noteBaseStyles';
 
 const NoteContent = styled.textarea`
+  ${noteBaseStyles};
   font-size: 24px;
   font-family: MontSerrat;
   color: ${(props) => props.theme.colors.primary};
-  caret-color: ${(props) => props.theme.colors.secondary};
-  background: transparent;
-  border: none;
-  outline: none;
-  resize: none;
   margin-bottom: 12.5px;
-  border-radius: 5px;
-  padding: 1rem;
-  width: 100%;
-  max-width: 600px;
   flex-grow: 2;
   &:focus,
   &:hover {
