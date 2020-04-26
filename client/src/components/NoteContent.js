@@ -15,9 +15,7 @@ const NoteContent = styled.textarea`
   width: 100%;
   max-width: 600px;
   flex-grow: 2;
-  &:focus {
-    box-shadow: 0 0 0 2px ${(props) => props.theme.colors.altTwo};
-  }
+  &:focus,
   &:hover {
     box-shadow: 0 0 0 2px ${(props) => props.theme.colors.altTwo};
   }
