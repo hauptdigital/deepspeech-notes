@@ -76,6 +76,8 @@ function stopRecording() {
   if (audioContext) {
     audioContext.close();
   }
+
+  return true;
 }
 
 async function getMediastreamFromMicrophone() {
