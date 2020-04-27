@@ -81,7 +81,7 @@ function Notes() {
         ) : (
           <NoteContent
             onChange={handleNoteContentChange}
-            value={noteContent.text}
+            value={noteContent.text.trim()}
             placeholder={placeholders.note}
           />
         )}
