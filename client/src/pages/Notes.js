@@ -18,9 +18,11 @@ function Notes() {
 
   async function handleRecordButtonClick() {
     if (!isRecording) {
-      setIsRecording(await startRecording());
+      await startRecording();
+      setIsRecording(true);
     } else {
-      setIsRecording(await stopRecording());
+      await stopRecording();
+      setIsRecording(false);
       setNoteContent({
         text: noteContent.text.trim() + ' ' + noteContent.recognizedText.trim(),
         recognizedText: '',
