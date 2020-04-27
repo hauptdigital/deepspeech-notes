@@ -29,15 +29,14 @@ function AudioVisualizer(props) {
     canvasContext.fillStyle = theme.colors.background;
     canvasContext.fillRect(0, 0, width, height);
 
-    const barWidth = (width / bufferLength) * 2.5;
+    const barWidth = (width / bufferLength) * 0.35;
     let barHeight;
-    let x = 0;
+    let x = barWidth / 2;
 
     for (let i = 0; i < bufferLength; i++) {
       barHeight = dataArray[i] / 2;
 
       // Draw bar top
-      //canvasContext.fillStyle = 'rgb(' + (barHeight + 100) + ',50,50)';
       canvasContext.fillStyle = theme.colors.secondary;
       canvasContext.fillRect(
         x,
@@ -68,7 +67,7 @@ function AudioVisualizer(props) {
       );
       canvasContext.fill();
 
-      x += barWidth + 20;
+      x += barWidth + (width / bufferLength) * 0.65;
     }
   }
 
@@ -79,7 +78,7 @@ function AudioVisualizer(props) {
       mediaStreamSource.connect(audioAnalyser);
 
       // Set Fast Fourier Transform (ttf) to frequency domain
-      audioAnalyser.fftSize = 256;
+      audioAnalyser.fftSize = 32;
       bufferLength = audioAnalyser.frequencyBinCount;
       dataArray = new Uint8Array(bufferLength);
 
@@ -88,8 +87,6 @@ function AudioVisualizer(props) {
       AudioWaveFormCanvas.height = AudioWaveFormCanvas.offsetHeight;
       width = AudioWaveFormCanvas.offsetWidth;
       height = AudioWaveFormCanvas.offsetHeight;
-      console.log(width);
-      console.log(height);
 
       // clear previous visualization in canvas
       canvasContext.clearRect(0, 0, width, height);
