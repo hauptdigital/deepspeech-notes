@@ -18,6 +18,9 @@ function App() {
             <Route path="/" exact>
               <Notes />
             </Route>
+            <Route path="/note/:noteId" exact>
+              <Notes />
+            </Route>
             <Route path="/about">
               <About />
             </Route>

@@ -1,4 +1,6 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
+import { getNote } from '../api/notes';
 import NoteContainer from '../components/NoteContainer';
 import NoteTitle from '../components/NoteTitle';
 import NoteContent from '../components/NoteContent';
@@ -8,8 +10,9 @@ import RecordButton from '../components/RecordButton';
 import { startRecording, stopRecording, getSocket } from '../utils/audio';
 
 function Notes() {
+  const { noteId } = useParams();
   const [isRecording, setIsRecording] = React.useState(false);
-  const [noteTitle, setTitleContent] = React.useState();
+  const [noteTitle, setNoteTitle] = React.useState();
   const [noteContent, setNoteContent] = React.useState({
     text: '',
     recognizedText: '',
@@ -39,12 +42,26 @@ function Notes() {
   }
 
   function handleNoteTitleChange(event) {
-    setTitleContent(event.target.value);
+    setNoteTitle(event.target.value);
   }
 
   function handleNoteContentChange(event) {
     setNoteContent({ text: event.target.value, recognizedText: '' });
   }
+
+  // Get note title and content if noteId is set
+  React.useEffect(() => {
+    async function doGetNote(noteId) {
+      const note = await getNote(noteId);
+      return note;
+    }
+    if (noteId) {
+      doGetNote(noteId).then((note) => {
+        setNoteTitle(note.title);
+        setNoteContent({ text: note.content, recognizedText: '' });
+      });
+    }
+  }, [noteId]);
 
   React.useEffect(() => {
     if (!isRecording) {
