@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { getNote } from '../api/notes';
+import { getNote, postNote } from '../api/notes';
 import NoteContainer from '../components/NoteContainer';
 import NoteTitle from '../components/NoteTitle';
 import NoteContent from '../components/NoteContent';
@@ -28,6 +28,7 @@ function Notes() {
         text: noteContent.text.trim() + ' ' + noteContent.recognizedText.trim(),
         recognizedText: '',
       });
+      postNote({ noteTitle, noteContent });
     }
   }
 

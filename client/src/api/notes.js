@@ -23,3 +23,14 @@ export function getNotes() {
     })
     .then((response) => response.json());
 }
+
+export function postNote(note) {
+  return fetch(`/api/notes/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Encrypt: 'true',
+    },
+    body: JSON.stringify(note),
+  }).then((response) => response.json());
+}
