@@ -66,13 +66,9 @@ function Notes() {
   }
 
   React.useEffect(() => {
-    // Get note title and content if noteId is set
-    async function doGetNote(noteId) {
-      const note = await getNote(noteId);
-      return note;
-    }
     if (noteId) {
-      doGetNote(noteId).then((note) => {
+      // Get note title and content if noteId is set
+      getNote(noteId).then((note) => {
         setNoteTitle(note.title);
         setNoteContent({ text: note.content, recognizedText: '' });
       });
@@ -110,7 +106,7 @@ function Notes() {
         {isRecording ? (
           <NoteContentReadOnly
             noteContent={noteContent}
-            placehonplder={placeholders.note}
+            placeholder={placeholders.note}
           />
         ) : (
           <NoteContent

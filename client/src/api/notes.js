@@ -3,7 +3,7 @@ export function getNote(noteId) {
     method: 'GET',
   })
     .then((response) => {
-      if (response.status !== 200) {
+      if (!response.ok) {
         throw new Error(response.statusText);
       }
       return response;
@@ -16,7 +16,7 @@ export function getNotes() {
     method: 'GET',
   })
     .then((response) => {
-      if (response.status !== 200) {
+      if (!response.ok) {
         throw new Error(response.statusText);
       }
       return response;
