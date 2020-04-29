@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { getNote, postNote } from '../api/notes';
+import { getNote, postNote, updateNote } from '../api/notes';
 import NoteContainer from '../components/NoteContainer';
 import NoteTitle from '../components/NoteTitle';
 import NoteContent from '../components/NoteContent';
@@ -11,6 +11,7 @@ import { startRecording, stopRecording, getSocket } from '../utils/audio';
 
 function Notes() {
   const { noteId } = useParams();
+  const [currentNodeId, setCurrentNodeId] = React.useState({});
   const [isRecording, setIsRecording] = React.useState(false);
   const [noteTitle, setNoteTitle] = React.useState();
   const [noteContent, setNoteContent] = React.useState({
@@ -19,17 +20,32 @@ function Notes() {
   });
   const placeholders = { title: 'Title', note: 'Note' };
 
-  function handleRecordButtonClick() {
-    if (!isRecording) {
-      setIsRecording(startRecording());
+  async function saveNote() {
+    console.log(currentNodeId);
+    if (currentNodeId) {
+      // Update note in DB if there is a noteId collected from parameters
+      updateNote({ noteTitle, noteContent }, currentNodeId);
     } else {
-      setIsRecording(stopRecording());
+      // Create new note in DB
+      const createdNoteId = await postNote({ noteTitle, noteContent });
+      setCurrentNodeId(createdNoteId);
+    }
+  }
+
+  async function handleRecordButtonClick() {
+    if (!isRecording) {
+      await startRecording();
+      setIsRecording(true);
+    } else {
+      await stopRecording();
+      setIsRecording(false);
+
       setNoteContent({
         text: noteContent.text.trim() + ' ' + noteContent.recognizedText.trim(),
         recognizedText: '',
       });
-      console.log(noteContent);
-      postNote({ noteTitle, noteContent });
+
+      saveNote();
     }
   }
 
@@ -51,8 +67,8 @@ function Notes() {
     setNoteContent({ text: event.target.value, recognizedText: '' });
   }
 
-  // Get note title and content if noteId is set
   React.useEffect(() => {
+    // Get note title and content if noteId is set
     async function doGetNote(noteId) {
       const note = await getNote(noteId);
       return note;
@@ -63,6 +79,7 @@ function Notes() {
         setNoteContent({ text: note.content, recognizedText: '' });
       });
     }
+    setCurrentNodeId(noteId);
   }, [noteId]);
 
   React.useEffect(() => {
@@ -70,6 +87,7 @@ function Notes() {
       return;
     }
 
+    // While recording, add new text chunks
     function handleRecognize(recognized) {
       addRecognizedText(recognized.text);
     }
@@ -87,6 +105,7 @@ function Notes() {
       <NoteContainer>
         <NoteTitle
           onChange={handleNoteTitleChange}
+          onBlur={saveNote}
           value={noteTitle}
           placeholder={placeholders.title}
         />
@@ -98,6 +117,7 @@ function Notes() {
         ) : (
           <NoteContent
             onChange={handleNoteContentChange}
+            onBlur={saveNote}
             value={noteContent.text}
             placeholder={placeholders.note}
           />
