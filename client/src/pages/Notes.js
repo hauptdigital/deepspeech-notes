@@ -116,7 +116,7 @@ function Notes() {
           <NoteContent
             onChange={handleNoteContentChange}
             onBlur={saveNote}
-            value={noteContent.text.trim()}
+            value={noteContent.text}
             placeholder={placeholders.note}
           />
         )}
