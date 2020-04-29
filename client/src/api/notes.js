@@ -29,7 +29,6 @@ export function postNote(note) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Encrypt: 'true',
     },
     body: JSON.stringify(note),
   }).then((response) => response.json());
@@ -40,7 +39,6 @@ export function updateNote(note, noteId) {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
-      Encrypt: 'true',
     },
     body: JSON.stringify(note),
   }).then((response) => response.json());
