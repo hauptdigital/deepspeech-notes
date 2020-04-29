@@ -28,6 +28,7 @@ function Notes() {
         text: noteContent.text.trim() + ' ' + noteContent.recognizedText.trim(),
         recognizedText: '',
       });
+      console.log(noteContent);
       postNote({ noteTitle, noteContent });
     }
   }
@@ -92,7 +93,7 @@ function Notes() {
         {isRecording ? (
           <NoteContentReadOnly
             noteContent={noteContent}
-            placeholder={placeholders.note}
+            placehonplder={placeholders.note}
           />
         ) : (
           <NoteContent

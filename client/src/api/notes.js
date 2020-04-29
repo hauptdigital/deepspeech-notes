@@ -34,3 +34,14 @@ export function postNote(note) {
     body: JSON.stringify(note),
   }).then((response) => response.json());
 }
+
+export function updateNote(note, noteId) {
+  return fetch(`/api/notes/${noteId}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Encrypt: 'true',
+    },
+    body: JSON.stringify(note),
+  }).then((response) => response.json());
+}
