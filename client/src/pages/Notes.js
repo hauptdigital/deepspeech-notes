@@ -21,7 +21,6 @@ function Notes() {
   const placeholders = { title: 'Title', note: 'Note' };
 
   async function saveNote() {
-    console.log(currentNodeId);
     if (currentNodeId) {
       // Update note in DB if there is a noteId collected from parameters
       updateNote({ noteTitle, noteContent }, currentNodeId);

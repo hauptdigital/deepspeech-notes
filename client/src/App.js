@@ -21,6 +21,9 @@ function App() {
             <Route path="/note/:noteId" exact>
               <Notes />
             </Route>
+            <Route path="/note" exact>
+              <Notes />
+            </Route>
             <Route path="/about">
               <About />
             </Route>
