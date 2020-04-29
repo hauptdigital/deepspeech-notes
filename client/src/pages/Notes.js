@@ -38,7 +38,6 @@ function Notes() {
     } else {
       await stopRecording();
       setIsRecording(false);
-
       setNoteContent({
         text: noteContent.text.trim() + ' ' + noteContent.recognizedText.trim(),
         recognizedText: '',
@@ -117,12 +116,12 @@ function Notes() {
           <NoteContent
             onChange={handleNoteContentChange}
             onBlur={saveNote}
-            value={noteContent.text}
+            value={noteContent.text.trim()}
             placeholder={placeholders.note}
           />
         )}
       </NoteContainer>
-      <AudioVisualizer>{isRecording ? 'listening...' : ''}</AudioVisualizer>
+      <AudioVisualizer isRecording={isRecording} />
       <RecordButton
         isRecording={isRecording}
         onRecordButtonClick={handleRecordButtonClick}
