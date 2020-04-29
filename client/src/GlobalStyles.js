@@ -5,6 +5,7 @@ function GlobalStyle() {
   return (
     <Global
       styles={(theme) => css`
+        @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
         *,
         *:before,
         *:after {

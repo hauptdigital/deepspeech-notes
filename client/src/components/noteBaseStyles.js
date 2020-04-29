@@ -1,8 +1,8 @@
 import { css } from '@emotion/core';
 
-const noteBaseStyles = css`
+const noteBaseStyles = (props) => css`
   font-family: MontSerrat;
-  caret-color: ${(props) => props.theme.colors.secondary};
+  caret-color: ${props.theme.colors.secondary};
   background: transparent;
   border: none;
   outline: none;
