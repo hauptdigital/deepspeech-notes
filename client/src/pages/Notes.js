@@ -1,4 +1,6 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
+import { getNote, postNote, updateNote } from '../api/notes';
 import NoteContainer from '../components/NoteContainer';
 import NoteTitle from '../components/NoteTitle';
 import NoteContent from '../components/NoteContent';
@@ -8,13 +10,26 @@ import RecordButton from '../components/RecordButton';
 import { startRecording, stopRecording, getSocket } from '../utils/audio';
 
 function Notes() {
+  const { noteId } = useParams();
+  const [currentNodeId, setCurrentNodeId] = React.useState({});
   const [isRecording, setIsRecording] = React.useState(false);
-  const [noteTitle, setTitleContent] = React.useState();
+  const [noteTitle, setNoteTitle] = React.useState();
   const [noteContent, setNoteContent] = React.useState({
     text: '',
     recognizedText: '',
   });
   const placeholders = { title: 'Title', note: 'Note' };
+
+  async function saveNote() {
+    if (currentNodeId) {
+      // Update note in DB if there is a noteId collected from parameters
+      updateNote({ noteTitle, noteContent }, currentNodeId);
+    } else {
+      // Create new note in DB
+      const createdNoteId = await postNote({ noteTitle, noteContent });
+      setCurrentNodeId(createdNoteId);
+    }
+  }
 
   async function handleRecordButtonClick() {
     if (!isRecording) {
@@ -27,6 +42,8 @@ function Notes() {
         text: noteContent.text.trim() + ' ' + noteContent.recognizedText.trim(),
         recognizedText: '',
       });
+
+      saveNote();
     }
   }
 
@@ -41,7 +58,7 @@ function Notes() {
   }
 
   function handleNoteTitleChange(event) {
-    setTitleContent(event.target.value);
+    setNoteTitle(event.target.value);
   }
 
   function handleNoteContentChange(event) {
@@ -49,10 +66,22 @@ function Notes() {
   }
 
   React.useEffect(() => {
+    if (noteId) {
+      // Get note title and content if noteId is set
+      getNote(noteId).then((note) => {
+        setNoteTitle(note.title);
+        setNoteContent({ text: note.content, recognizedText: '' });
+      });
+    }
+    setCurrentNodeId(noteId);
+  }, [noteId]);
+
+  React.useEffect(() => {
     if (!isRecording) {
       return;
     }
 
+    // While recording, add new text chunks
     function handleRecognize(recognized) {
       addRecognizedText(recognized.text);
     }
@@ -70,6 +99,7 @@ function Notes() {
       <NoteContainer>
         <NoteTitle
           onChange={handleNoteTitleChange}
+          onBlur={saveNote}
           value={noteTitle}
           placeholder={placeholders.title}
         />
@@ -81,7 +111,8 @@ function Notes() {
         ) : (
           <NoteContent
             onChange={handleNoteContentChange}
-            value={noteContent.text.trim()}
+            onBlur={saveNote}
+            value={noteContent.text}
             placeholder={placeholders.note}
           />
         )}

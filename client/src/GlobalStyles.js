@@ -17,6 +17,12 @@ function GlobalStyle() {
           background-color: ${theme.colors.background};
           color: ${theme.colors.primary};
         }
+        a,
+        a:hover,
+        a:active,
+        a:visited {
+          color: ${theme.colors.primary};
+        }
       `}
     />
   );

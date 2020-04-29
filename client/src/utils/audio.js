@@ -45,7 +45,7 @@ async function startRecording() {
   const sampleRate = mediaStreamSource.context.sampleRate;
 
   // Create Downsampler
-  const downsampler = new Worker('./downsampling_worker.js');
+  const downsampler = new Worker('../downsampling_worker.js');
 
   ///*** Setup audio processing and connect media stream source to audio processor ***///
   // Create audio processor to
@@ -76,7 +76,6 @@ function stopRecording() {
   if (audioContext) {
     audioContext.close();
   }
-
   return true;
 }
 
@@ -93,7 +92,7 @@ async function getMediastreamFromMicrophone() {
 
 async function createAudioContext() {
   const audioContext = new AudioContext();
-  await audioContext.audioWorklet.addModule('voice-processor.js');
+  await audioContext.audioWorklet.addModule('../voice-processor.js');
   return audioContext;
 }
 

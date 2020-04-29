@@ -2,12 +2,20 @@ require('dotenv').config();
 const http = require('http');
 const express = require('express');
 const path = require('path');
+const notes = require('./lib/routes/notes');
+const { initDatabase } = require('./lib/database/database');
 const { initSocket } = require('./src/socket');
 
 const port = process.env.PORT || 8080;
 const socketPort = process.env.SOCKET_PORT || 4000;
 
 const app = express();
+
+// Parse application/json for all request
+app.use(express.json());
+
+// Setup api endpoint
+app.use('/api/notes', notes);
 
 if (process.env.NODE_ENV === 'production') {
   // Web microphone socket
@@ -30,9 +38,13 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.join(__dirname, 'client/storybook-static', 'index.html'));
   });
 
-  server.listen(port, () =>
-    console.log(`Express server app listening at http://localhost:${port}`)
-  );
+  initDatabase(process.env.DB_URL, process.env.DB_NAME).then(async () => {
+    console.log(`Database ${process.env.DB_NAME} is ready`);
+
+    server.listen(port, () =>
+      console.log(`Express server app listening at http://localhost:${port}`)
+    );
+  });
 } /* development */ else {
   // Web microphone socket
 
@@ -48,7 +60,11 @@ if (process.env.NODE_ENV === 'production') {
 
   initSocket(socket);
 
-  app.listen(port, () =>
-    console.log(`Express server app listening at http://localhost:${port}`)
-  );
+  initDatabase(process.env.DB_URL, process.env.DB_NAME).then(async () => {
+    console.log(`Database ${process.env.DB_NAME} is ready`);
+
+    app.listen(port, () =>
+      console.log(`Express server app listening at http://localhost:${port}`)
+    );
+  });
 }
