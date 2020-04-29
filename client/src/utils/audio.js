@@ -76,7 +76,8 @@ function stopRecording() {
   if (audioContext) {
     audioContext.close();
   }
-  return false;
+
+  return true;
 }
 
 async function getMediastreamFromMicrophone() {
@@ -113,4 +114,10 @@ function processAudio(audioWorkletNode, downsampler, sampleRate, socket) {
   return audioWorkletNode;
 }
 
-export { startRecording, stopRecording, getSocket };
+export {
+  startRecording,
+  stopRecording,
+  getSocket,
+  audioContext,
+  mediaStreamSource,
+};
