@@ -1,7 +1,7 @@
 import React from 'react';
 import GlobalStyles from './GlobalStyles';
 import { ThemeProvider } from 'emotion-theming';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import theme from './theme';
 import Container from './components/Container';
 import Notes from './pages/Notes';
@@ -16,7 +16,9 @@ function App() {
         <Router>
           <Switch>
             <Route path="/" exact>
-              <Notes />
+              Demo links:
+              <Link to="/note">Create new note</Link>
+              <Link to="/note/5ea98269c610ed2641427200">See existing note</Link>
             </Route>
             <Route path="/note/:noteId" exact>
               <Notes />
