@@ -13,7 +13,7 @@ function Notes() {
   const { noteId } = useParams();
   const [currentNodeId, setCurrentNodeId] = React.useState({});
   const [isRecording, setIsRecording] = React.useState(false);
-  const [noteTitle, setNoteTitle] = React.useState();
+  const [noteTitle, setNoteTitle] = React.useState('');
   const [noteContent, setNoteContent] = React.useState({
     text: '',
     recognizedText: '',
@@ -80,7 +80,7 @@ function Notes() {
     if (!isRecording) {
       return;
     }
-
+    addRecognizedText('Let us add some ideas');
     // While recording, add new text chunks
     function handleRecognize(recognized) {
       addRecognizedText(recognized.text);
