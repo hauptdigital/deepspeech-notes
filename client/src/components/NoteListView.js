@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 
@@ -34,14 +35,20 @@ const NoteContentListView = styled.p`
 `;
 
 function NoteListView(props) {
+  const history = useHistory();
+
+  function handleNoteListViewClick(noteId) {
+    history.push(`/note/${noteId}`);
+  }
+
   return (
-    <NoteCardListView>
+    <NoteCardListView onClick={() => handleNoteListViewClick(props.noteId)}>
       {props.noteHasTitle && (
         <NoteTitleListView>{props.title}</NoteTitleListView>
       )}
       {props.noteHasContent && (
         <NoteContentListView>
-          {props.content.substring(0, 150)}
+          {props.content.substring(0, 100)}
         </NoteContentListView>
       )}
     </NoteCardListView>
@@ -49,6 +56,7 @@ function NoteListView(props) {
 }
 
 NoteListView.propTypes = {
+  noteId: PropTypes.string,
   noteHasTitle: PropTypes.bool,
   noteHasContent: PropTypes.bool,
   title: PropTypes.string,

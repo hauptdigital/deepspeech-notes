@@ -19,6 +19,7 @@ function NotesList(props) {
       return (
         <NoteListView
           key={note._id}
+          noteId={note._id}
           noteHasTitle={noteHasTitle}
           noteHasContent={noteHasContent}
           content={note.content}
