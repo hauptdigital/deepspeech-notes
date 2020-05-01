@@ -6,7 +6,7 @@ const NoteContent = styled.textarea`
   font-size: 24px;
   font-family: MontSerrat;
   color: ${(props) => props.theme.colors.primary};
-  margin-bottom: 12.5px;
+  margin: 6px 0;
   flex-grow: 2;
   &:focus,
   &:hover {

@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { getNote, postNote, updateNote } from '../api/notes';
 import NoteContainer from '../components/NoteContainer';
 import NoteTitle from '../components/NoteTitle';
+import Divider from '../components/Divider';
 import NoteContent from '../components/NoteContent';
 import NoteContentReadOnly from '../components/NoteContentReadOnly';
 import AudioVisualizer from '../components/AudioVisualizer';
@@ -103,6 +104,7 @@ function Notes() {
           value={noteTitle}
           placeholder={placeholders.title}
         />
+        <Divider />
         {isRecording ? (
           <NoteContentReadOnly
             noteContent={noteContent}

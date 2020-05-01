@@ -26,6 +26,14 @@ const NoteTitleListView = styled.p`
   font-weight: bold;
   color: ${(props) => props.theme.colors.secondary};
   margin: 0;
+  &:after {
+    content: '';
+    display: block;
+    width: 90px;
+    height: 2px;
+    background: ${(props) => props.theme.colors.altOne};
+    margin: 1rem 0;
+  }
 `;
 
 const NoteContentListView = styled.p`

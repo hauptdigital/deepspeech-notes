@@ -6,7 +6,7 @@ const NoteTitle = styled.input`
   font-size: 30px;
   font-weight: bold;
   color: ${(props) => props.theme.colors.secondary};
-  margin: 12.5px 0;
+  margin: 6px 0;
   &:focus,
   &:hover {
     box-shadow: 0 0 0 2px ${(props) => props.theme.colors.altTwo};
