@@ -4,9 +4,6 @@ import styled from '@emotion/styled';
 import NoteListView from './NoteListView';
 
 const NotesListWrapper = styled.div`
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
   max-width: 600px;
   width: 100%;
 `;

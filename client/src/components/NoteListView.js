@@ -12,7 +12,7 @@ const NoteCardListView = styled.div`
   padding: 1rem;
   transition: 0.3s;
   margin-bottom: 12.5px;
-  max-width: 195px;
+  width: 100%;
   cursor: pointer;
   box-shadow: 0 0 0 2px ${(props) => props.theme.colors.light};
   &:hover {
@@ -48,7 +48,7 @@ function NoteListView(props) {
       )}
       {props.noteHasContent && (
         <NoteContentListView>
-          {props.content.substring(0, 100)}
+          {props.content.substring(0, 250)}
         </NoteContentListView>
       )}
     </NoteCardListView>
