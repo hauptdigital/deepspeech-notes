@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import theme from './theme';
 import Container from './components/Container';
 import Notes from './pages/Notes';
+import Note from './pages/Note';
 import About from './pages/About';
 import Statistics from './pages/Statistics';
 
@@ -17,14 +18,18 @@ function App() {
           <Switch>
             <Route path="/" exact>
               Demo links:
+              <Link to="/notes">List all notes</Link>
               <Link to="/note">Create new note</Link>
               <Link to="/note/5ea98269c610ed2641427200">See existing note</Link>
             </Route>
             <Route path="/note/:noteId" exact>
+              <Note />
+            </Route>
+            <Route path="/notes" exact>
               <Notes />
             </Route>
             <Route path="/note" exact>
-              <Notes />
+              <Note />
             </Route>
             <Route path="/about">
               <About />
