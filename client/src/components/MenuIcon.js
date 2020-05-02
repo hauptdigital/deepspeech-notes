@@ -5,7 +5,7 @@ const MenuBar = styled.div`
   width: 40px;
   height: 3px;
   background-color: ${(props) => props.theme.colors.altTwo};
-  transition: 1s;
+  transition: 0.5s;
 `;
 
 const MenuBarOne = styled(MenuBar)`
@@ -32,6 +32,7 @@ const MenuIconWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  cursor: pointer;
 `;
 
 function MenuIcon() {
