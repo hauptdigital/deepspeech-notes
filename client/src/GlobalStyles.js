@@ -17,6 +17,7 @@ function GlobalStyle() {
           font-family: 'Montserrat', sans-serif;
           background-color: ${theme.colors.background};
           color: ${theme.colors.primary};
+          overflow-x: hidden;
         }
         a,
         a:hover,

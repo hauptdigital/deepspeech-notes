@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 
 const MenuBar = styled.div`
@@ -10,19 +11,20 @@ const MenuBar = styled.div`
 
 const MenuBarOne = styled(MenuBar)`
   ${(props) =>
-    props.menuIsActive
-      ? 'transform: rotate(-45deg) translate(-19px, 7px);width: 56.6px;'
+    props.menuIsOpen
+      ? 'transform: rotate(45deg) translate(7px, 19px);width: 56.6px;'
       : ''}
 `;
 
 const MenuBarTwo = styled(MenuBar)`
-  ${(props) => (props.menuIsActive ? 'opacity: 0;' : '')}
+  ${(props) =>
+    props.menuIsOpen ? 'transform: translate(-19px, 0px);opacity: 0;' : ''}
 `;
 
 const MenuBarThree = styled(MenuBar)`
   ${(props) =>
-    props.menuIsActive
-      ? 'transform: rotate(45deg) translate(-19px, -7px);width: 56.6px;'
+    props.menuIsOpen
+      ? 'transform: rotate(-45deg) translate(7px, -19px);width: 56.6px;'
       : ''}
 `;
 
@@ -33,25 +35,25 @@ const MenuIconWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   cursor: pointer;
+  z-index: 2000;
 `;
 
-function MenuIcon() {
-  const [menuIsActive, setMenuIsActive] = React.useState(false);
-
-  function handleMenuIconWrapperClick() {
-    setMenuIsActive(!menuIsActive);
-  }
-
+function MenuIcon(props) {
   return (
     <MenuIconWrapper
-      onClick={handleMenuIconWrapperClick}
-      menuIsActive={menuIsActive}
+      onClick={props.onMenuIconClick}
+      menuIsOpen={props.menuIsOpen}
     >
-      <MenuBarOne menuIsActive={menuIsActive} />
-      <MenuBarTwo menuIsActive={menuIsActive} />
-      <MenuBarThree menuIsActive={menuIsActive} />
+      <MenuBarOne menuIsOpen={props.menuIsOpen} />
+      <MenuBarTwo menuIsOpen={props.menuIsOpen} />
+      <MenuBarThree menuIsOpen={props.menuIsOpen} />
     </MenuIconWrapper>
   );
 }
+
+MenuIcon.propTypes = {
+  menuIsOpen: PropTypes.bool,
+  onMenuIconClick: PropTypes.func,
+};
 
 export default MenuIcon;

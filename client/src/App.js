@@ -4,8 +4,6 @@ import { ThemeProvider } from 'emotion-theming';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import theme from './theme';
 import Header from './components/Header';
-import Menu from './components/Menu';
-import MenuIcon from './components/MenuIcon';
 import Container from './components/Container';
 import Notes from './pages/Notes';
 import Note from './pages/Note';
@@ -17,10 +15,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <Router>
-        <Header>
-          <Menu />
-          <MenuIcon />
-        </Header>
+        <Header />
         <Container>
           <Switch>
             <Route path="/" exact>
