@@ -6,8 +6,7 @@ import MenuIcon from './MenuIcon';
 
 const NavigationBar = styled.div`
   width: 100%;
-  height: 90px;
-  padding: 1rem;
+  padding: 15px;
   display: flex;
   justify-content: space-between;
 `;

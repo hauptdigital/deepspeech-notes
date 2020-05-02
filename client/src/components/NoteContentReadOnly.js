@@ -7,7 +7,7 @@ import { CSSTransitionGroup } from 'react-transition-group';
 
 const NoteContentTextFromAudio = styled.div`
   ${noteBaseStyles};
-  font-size: 24px;
+  font-size: 18px;
   color: ${(props) => props.theme.colors.primary};
   margin-bottom: 12.5px;
   flex-grow: 2;
@@ -17,7 +17,7 @@ const NoteContentTextFromAudio = styled.div`
   content: "${(props) => props.placeholder}";
   }
   overflow: hidden;
-  height: 283px;
+  height: 190px;
 `;
 
 const FadeoutText = styled.div`
@@ -39,7 +39,7 @@ function NoteContentReadOnly(props) {
   React.useEffect(() => {
     // Scroll to bottom of noteContent div when new text appears
     scrollReference.current.scrollTop = scrollReference.current.scrollHeight;
-    scrollReference.current.scrollHeight > 290
+    scrollReference.current.scrollHeight > 190
       ? setShowFadeoutText(true)
       : setShowFadeoutText(false);
   }, [props.noteContent.recognizedText]);

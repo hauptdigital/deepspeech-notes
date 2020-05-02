@@ -15,7 +15,7 @@ const MenuWrapper = styled.div`
   transition: transform 0.3s;
 
   transform: ${(props) =>
-    props.menuIsOpen ? 'translateX(0)' : 'translateX(50%)'};
+    props.menuIsOpen ? 'translateX(0)' : 'translateX(100%)'};
 
   @media (max-width: 768px) {
     width: 100%;
@@ -24,7 +24,7 @@ const MenuWrapper = styled.div`
 
 const MenuLinkCard = styled.div`
   transform: ${(props) =>
-    props.menuIsOpen ? 'translateX(0)' : 'translateX(50%)'};
+    props.menuIsOpen ? 'translateX(0)' : 'translateX(100%)'};
   transition: transform ${(props) => (props.index + 1) * 0.3}s;
   border-radius: 25px 0 0 25px;
   width: 100%;

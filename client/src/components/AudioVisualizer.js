@@ -7,7 +7,7 @@ import { audioContext, mediaStreamSource } from '../utils/audio';
 const AudioWaveForm = styled.canvas`
   width: 100%;
   max-width: 600px;
-  height: 150px;
+  height: 100px;
 `;
 
 function AudioVisualizer(props) {
@@ -32,7 +32,7 @@ function AudioVisualizer(props) {
     let x = barWidth;
 
     for (let i = 0; i < bufferLength; i++) {
-      barHeight = dataArray[i] / 2;
+      barHeight = dataArray[i] / 3;
 
       // Draw bar
       canvasContext.fillStyle = theme.colors.secondary;
