@@ -3,6 +3,8 @@ import GlobalStyles from './GlobalStyles';
 import { ThemeProvider } from 'emotion-theming';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import theme from './theme';
+import Header from './components/Header';
+import MenuIcon from './components/MenuIcon';
 import Container from './components/Container';
 import Notes from './pages/Notes';
 import Note from './pages/Note';
@@ -13,6 +15,9 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
+      <Header>
+        <MenuIcon />
+      </Header>
       <Container>
         <Router>
           <Switch>
