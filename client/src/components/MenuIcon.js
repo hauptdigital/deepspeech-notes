@@ -36,6 +36,7 @@ const MenuIconWrapper = styled.div`
   justify-content: space-between;
   cursor: pointer;
   z-index: 2000;
+  ${(props) => (props.menuIsOpen ? 'position: fixed;right: 15px;' : '')}
 `;
 
 function MenuIcon(props) {
