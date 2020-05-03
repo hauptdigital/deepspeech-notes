@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const MenuWrapper = styled.div`
-  position: absolute;
+  position: fixed;
   height: 100vh;
   width: 25%;
   display: flex;
