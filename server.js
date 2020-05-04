@@ -3,7 +3,7 @@ const http = require('http');
 const express = require('express');
 const path = require('path');
 const notes = require('./lib/routes/notes');
-const { initDatabase } = require('./lib/database/database');
+const { initDatabase, createIndexes } = require('./lib/database/database');
 const { initSocket } = require('./src/socket');
 
 const port = process.env.PORT || 8080;
@@ -41,6 +41,9 @@ if (process.env.NODE_ENV === 'production') {
   initDatabase(process.env.DB_URL, process.env.DB_NAME).then(async () => {
     console.log(`Database ${process.env.DB_NAME} is ready`);
 
+    await createIndexes();
+    console.log('Indexes created');
+
     server.listen(port, () =>
       console.log(`Express server app listening at http://localhost:${port}`)
     );
@@ -62,6 +65,9 @@ if (process.env.NODE_ENV === 'production') {
 
   initDatabase(process.env.DB_URL, process.env.DB_NAME).then(async () => {
     console.log(`Database ${process.env.DB_NAME} is ready`);
+
+    await createIndexes();
+    console.log('Indexes created');
 
     app.listen(port, () =>
       console.log(`Express server app listening at http://localhost:${port}`)

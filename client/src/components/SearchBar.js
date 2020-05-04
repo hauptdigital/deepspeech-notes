@@ -1,7 +1,7 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
+import PropTypes from 'prop-types';
 import { ReactComponent as SearchIcon } from '../assets/lens.svg';
-import { throttle } from 'throttle-debounce';
 import noteBaseStyles from '../components/noteBaseStyles.js';
 
 const SearchBarWrapper = styled.div`
@@ -32,33 +32,22 @@ const SearchField = styled.input`
   }
 `;
 
-const sendSearchQuery = (searchQuery) => {
-  console.log(searchQuery);
-};
-
-function SearchBar() {
-  const [searchQuery, setSearchQuery] = React.useState('');
-
-  const throttledSearchQuery = useCallback(
-    throttle(500, (searchQuery) => sendSearchQuery(searchQuery)),
-    []
-  );
-
-  function handleSearchFieldChange(event) {
-    setSearchQuery(event.target.value);
-    throttledSearchQuery(event.target.value);
-  }
-
+function SearchBar(props) {
   return (
     <SearchBarWrapper>
       <SearchIcon />
       <SearchField
         placeholder="Search..."
-        onChange={handleSearchFieldChange}
-        value={searchQuery}
+        onChange={props.onSearchBarChange}
+        value={props.searchQuery}
       />
     </SearchBarWrapper>
   );
 }
+
+SearchBar.propTypes = {
+  searchQuery: PropTypes.string,
+  onSearchBarChange: PropTypes.func,
+};
 
 export default SearchBar;
