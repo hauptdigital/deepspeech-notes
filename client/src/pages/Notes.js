@@ -1,6 +1,7 @@
 import React from 'react';
 import { getNotes } from '../api/notes';
 import Container from '../components/Container';
+import SearchBar from '../components/SearchBar.js';
 import NotesList from '../components/NotesList';
 
 function ListNotes() {
@@ -20,6 +21,7 @@ function ListNotes() {
 
   return (
     <>
+      <SearchBar />
       {notes.length > 0 ? (
         <NotesList notes={notes} />
       ) : (
