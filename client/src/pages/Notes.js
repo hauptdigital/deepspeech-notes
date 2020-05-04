@@ -9,7 +9,7 @@ function ListNotes() {
   const [isLoading, setIsLoading] = React.useState(true);
   React.useEffect(() => {
     // Get all notes
-    getNotes().then((notes) => {
+    getNotes('').then((notes) => {
       setNotes(notes);
       setIsLoading(false);
     });
