@@ -42,8 +42,41 @@ const NoteContentListView = styled.p`
   margin: 0;
 `;
 
+const Highlighted = styled.span`
+  background-color: #a29cb38a;
+  transition: 0.3s;
+  border-radius: 5px;
+`;
+
+function getHighlightedText(text, searchQuery) {
+  if (text) {
+    // Split text on searchQuery term, include term itself into parts, ignore case
+    const parts = text.split(new RegExp(`(${searchQuery})`, 'gi'));
+    return (
+      <span>
+        {parts.map((part, index) =>
+          part.toLowerCase() === searchQuery.toLowerCase() ? (
+            <Highlighted key={index}>{part}</Highlighted>
+          ) : (
+            part
+          )
+        )}
+      </span>
+    );
+  }
+}
+
 function NoteListView(props) {
   const history = useHistory();
+
+  const noteTitleHighlighted = getHighlightedText(
+    props.title,
+    props.searchQuery
+  );
+  const noteContentHighlighted = getHighlightedText(
+    props.content,
+    props.searchQuery
+  );
 
   function handleNoteListViewClick(noteId) {
     history.push(`/note/${noteId}`);
@@ -52,12 +85,10 @@ function NoteListView(props) {
   return (
     <NoteCardListView onClick={() => handleNoteListViewClick(props.noteId)}>
       {props.noteHasTitle && (
-        <NoteTitleListView>{props.title}</NoteTitleListView>
+        <NoteTitleListView>{noteTitleHighlighted}</NoteTitleListView>
       )}
       {props.noteHasContent && (
-        <NoteContentListView>
-          {props.content.substring(0, 250)}
-        </NoteContentListView>
+        <NoteContentListView>{noteContentHighlighted}</NoteContentListView>
       )}
     </NoteCardListView>
   );
@@ -69,6 +100,7 @@ NoteListView.propTypes = {
   noteHasContent: PropTypes.bool,
   title: PropTypes.string,
   content: PropTypes.string,
+  searchQuery: PropTypes.string,
 };
 
 export default NoteListView;

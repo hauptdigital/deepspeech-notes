@@ -19,7 +19,7 @@ function ListNotes() {
 
   function handleSearchFieldChange(event) {
     setSearchQuery(event.target.value);
-    if (event.target.value.length > 2) {
+    if (event.target.value.length > 2 || event.target.value.length === 0) {
       doThrottledSearchQueryCallback(event.target.value);
     }
   }
@@ -44,7 +44,7 @@ function ListNotes() {
           <Loading />
         </Container>
       ) : notes.length > 0 ? (
-        <NotesList notes={notes} />
+        <NotesList notes={notes} searchQuery={searchQuery} />
       ) : (
         <Container>No search results :-(</Container>
       )}
