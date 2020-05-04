@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { throttle } from 'throttle-debounce';
 import { getNotes } from '../api/notes';
 import Container from '../components/Container';
+import { ReactComponent as Loading } from '../assets/loading.svg';
 import SearchBar from '../components/SearchBar.js';
 import NotesList from '../components/NotesList';
 
@@ -18,20 +19,19 @@ function ListNotes() {
 
   function handleSearchFieldChange(event) {
     setSearchQuery(event.target.value);
-    doThrottledSearchQueryCallback(event.target.value);
+    if (event.target.value.length > 2) {
+      doThrottledSearchQueryCallback(event.target.value);
+    }
   }
 
   React.useEffect(() => {
     // Get queried notes
+    setIsLoading(true);
     getNotes(throttledSearchQuery).then((notes) => {
       setNotes(notes);
       setIsLoading(false);
     });
   }, [throttledSearchQuery]);
-
-  if (isLoading) {
-    return <Container>Loading...</Container>;
-  }
 
   return (
     <>
@@ -39,10 +39,14 @@ function ListNotes() {
         onSearchBarChange={handleSearchFieldChange}
         searchQuery={searchQuery}
       />
-      {notes.length > 0 ? (
+      {isLoading ? (
+        <Container>
+          <Loading />
+        </Container>
+      ) : notes.length > 0 ? (
         <NotesList notes={notes} />
       ) : (
-        <Container>Go ahead and create your first note :-)</Container>
+        <Container>No search results :-(</Container>
       )}
     </>
   );

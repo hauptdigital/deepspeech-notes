@@ -20,6 +20,7 @@ const SearchField = styled.input`
   border-bottom: 2px solid ${(props) => props.theme.colors.light};
   border-radius: 0px;
   transition: 0.3s;
+  z-index: -1;
 
   &:hover,
   &:focus {
