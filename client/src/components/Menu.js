@@ -58,7 +58,7 @@ function Menu(props) {
         key={item.title}
         menuIsOpen={props.menuIsOpen}
         backgroundColor={item.color}
-        index={index}
+        slideInDelay={(index + 1) * 0.3}
       >
         <MenuLink to={item.link}>{item.title}</MenuLink>
       </MenuLinkCard>
