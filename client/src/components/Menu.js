@@ -15,7 +15,7 @@ const MenuWrapper = styled.div`
   transition: transform 0.3s;
 
   transform: ${(props) =>
-    props.menuIsOpen ? 'translateX(0)' : 'translateX(100%)'};
+    props.isOpen ? 'translateX(0)' : 'translateX(100%)'};
 
   @media (max-width: 768px) {
     width: 100%;
@@ -24,8 +24,8 @@ const MenuWrapper = styled.div`
 
 const MenuLinkCard = styled.div`
   transform: ${(props) =>
-    props.menuIsOpen ? 'translateX(0)' : 'translateX(100%)'};
-  transition: transform ${(props) => (props.index + 1) * 0.3}s;
+    props.isOpen ? 'translateX(0)' : 'translateX(100%)'};
+  transition: transform ${(props) => props.slideInDelay}s;
   border-radius: 25px 0 0 25px;
   width: 100%;
   height: 100%;
@@ -33,7 +33,7 @@ const MenuLinkCard = styled.div`
   justify-content: center;
   align-content: center;
   background-color: ${(props) => props.backgroundColor};
-  z-index: ${(props) => props.index * -1};
+  z-index: ${(props) => props.slideInDelay};
   margin-top: -35px;
 `;
 
@@ -56,7 +56,7 @@ function Menu(props) {
     return (
       <MenuLinkCard
         key={item.title}
-        menuIsOpen={props.menuIsOpen}
+        isOpen={props.menuIsOpen}
         backgroundColor={item.color}
         slideInDelay={(index + 1) * 0.3}
       >
@@ -65,7 +65,7 @@ function Menu(props) {
     );
   });
 
-  return <MenuWrapper menuIsOpen={props.menuIsOpen}>{menuItems}</MenuWrapper>;
+  return <MenuWrapper isOpen={props.menuIsOpen}>{menuItems}</MenuWrapper>;
 }
 
 Menu.propTypes = {
