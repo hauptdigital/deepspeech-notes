@@ -3,6 +3,7 @@ import { throttle } from 'throttle-debounce';
 import { getNotes } from '../api/notes';
 import Container from '../components/Container';
 import { ReactComponent as Loading } from '../assets/loading.svg';
+import NewNote from '../components/NewNote';
 import SearchBar from '../components/SearchBar.js';
 import NotesList from '../components/NotesList';
 
@@ -35,6 +36,7 @@ function ListNotes() {
 
   return (
     <>
+      <NewNote text="New Note" />
       <SearchBar
         onSearchBarChange={handleSearchFieldChange}
         searchQuery={searchQuery}
