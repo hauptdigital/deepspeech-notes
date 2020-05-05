@@ -101,7 +101,6 @@ NoteListView.propTypes = {
   noteHasContent: PropTypes.bool,
   title: PropTypes.string,
   content: PropTypes.string,
-  text: PropTypes.string,
   searchQuery: PropTypes.string,
 };
 
