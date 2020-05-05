@@ -52,10 +52,10 @@ function HighlightedText({ text, searchQuery }) {
   if (!text) {
     return null;
   }
- 
-   // Split text on searchQuery term, include term itself into parts, ignore case
+
+  // Split text on searchQuery term, include term itself into parts, ignore case
   const parts = text.split(new RegExp(`(${searchQuery})`, 'gi'));
-  
+
   return (
     <span>
       {parts.map((part, index) =>
@@ -72,15 +72,6 @@ function HighlightedText({ text, searchQuery }) {
 function NoteListView(props) {
   const history = useHistory();
 
-  const noteTitleHighlighted = getHighlightedText(
-    props.title,
-    props.searchQuery
-  );
-  const noteContentHighlighted = getHighlightedText(
-    props.content,
-    props.searchQuery
-  );
-
   function handleNoteListViewClick(noteId) {
     history.push(`/note/${noteId}`);
   }
@@ -88,10 +79,17 @@ function NoteListView(props) {
   return (
     <NoteCardListView onClick={() => handleNoteListViewClick(props.noteId)}>
       {props.noteHasTitle && (
-        <NoteTitleListView>{noteTitleHighlighted}</NoteTitleListView>
+        <NoteTitleListView>
+          <HighlightedText text={props.title} searchQuery={props.searchQuery} />
+        </NoteTitleListView>
       )}
       {props.noteHasContent && (
-        <NoteContentListView>{noteContentHighlighted}</NoteContentListView>
+        <NoteContentListView>
+          <HighlightedText
+            text={props.content}
+            searchQuery={props.searchQuery}
+          />
+        </NoteContentListView>
       )}
     </NoteCardListView>
   );
@@ -103,6 +101,12 @@ NoteListView.propTypes = {
   noteHasContent: PropTypes.bool,
   title: PropTypes.string,
   content: PropTypes.string,
+  text: PropTypes.string,
+  searchQuery: PropTypes.string,
+};
+
+HighlightedText.propTypes = {
+  text: PropTypes.string,
   searchQuery: PropTypes.string,
 };
 
