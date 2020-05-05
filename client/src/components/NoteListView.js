@@ -48,22 +48,25 @@ const Highlighted = styled.span`
   border-radius: 5px;
 `;
 
-function getHighlightedText(text, searchQuery) {
-  if (text) {
-    // Split text on searchQuery term, include term itself into parts, ignore case
-    const parts = text.split(new RegExp(`(${searchQuery})`, 'gi'));
-    return (
-      <span>
-        {parts.map((part, index) =>
-          part.toLowerCase() === searchQuery.toLowerCase() ? (
-            <Highlighted key={index}>{part}</Highlighted>
-          ) : (
-            part
-          )
-        )}
-      </span>
-    );
+function HighlightedText({ text, searchQuery }) {
+  if (!text) {
+    return null;
   }
+ 
+   // Split text on searchQuery term, include term itself into parts, ignore case
+  const parts = text.split(new RegExp(`(${searchQuery})`, 'gi'));
+  
+  return (
+    <span>
+      {parts.map((part, index) =>
+        part.toLowerCase() === searchQuery.toLowerCase() ? (
+          <Highlighted key={index}>{part}</Highlighted>
+        ) : (
+          part
+        )
+      )}
+    </span>
+  );
 }
 
 function NoteListView(props) {
