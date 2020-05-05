@@ -11,8 +11,8 @@ export function getNote(noteId) {
     .then((response) => response.json());
 }
 
-export function getNotes() {
-  return fetch(`/api/notes/`, {
+export function getNotes(searchQuery) {
+  return fetch(`/api/notes/?q=${searchQuery}`, {
     method: 'GET',
   })
     .then((response) => {

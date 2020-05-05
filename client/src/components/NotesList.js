@@ -16,6 +16,7 @@ function NotesList(props) {
       return (
         <NoteListView
           key={note._id}
+          searchQuery={props.searchQuery}
           noteId={note._id}
           noteHasTitle={noteHasTitle}
           noteHasContent={noteHasContent}
@@ -31,6 +32,7 @@ function NotesList(props) {
 
 NotesList.propTypes = {
   notes: PropTypes.array,
+  searchQuery: PropTypes.string,
 };
 
 export default NotesList;

@@ -4,7 +4,7 @@ import Menu from './Menu';
 import { ReactComponent as Logo } from '../assets/logo.svg';
 import MenuIcon from './MenuIcon';
 
-const NavigationBar = styled.div`
+const Navigation = styled.header`
   width: 100%;
   padding: 15px;
   display: flex;
@@ -16,15 +16,14 @@ function Header() {
 
   function handleMenuIconClick() {
     setMenuIsOpen(!menuIsOpen);
-    console.log(menuIsOpen);
   }
 
   return (
-    <NavigationBar>
+    <Navigation>
       <Logo />
-      <Menu menuIsOpen={menuIsOpen} />
       <MenuIcon onMenuIconClick={handleMenuIconClick} menuIsOpen={menuIsOpen} />
-    </NavigationBar>
+      <Menu menuIsOpen={menuIsOpen} />
+    </Navigation>
   );
 }
 
