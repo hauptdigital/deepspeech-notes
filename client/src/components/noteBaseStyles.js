@@ -8,7 +8,7 @@ const noteBaseStyles = (props) => css`
   outline: none;
   resize: none;
   border-radius: 5px;
-  padding: 1rem;
+  padding: 10px;
   width: 100%;
   max-width: 600px;
   transition: 0.3s;

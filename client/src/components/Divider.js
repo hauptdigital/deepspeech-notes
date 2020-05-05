@@ -5,7 +5,7 @@ const Divider = styled.div`
   width: 90px;
   height: 2px;
   background: ${(props) => props.theme.colors.altOne};
-  margin: 1rem;
+  margin: 5px 10px;
 `;
 
 export default Divider;

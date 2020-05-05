@@ -3,7 +3,7 @@ import noteBaseStyles from './noteBaseStyles';
 
 const NoteTitle = styled.input`
   ${noteBaseStyles};
-  font-size: 30px;
+  font-size: 20px;
   font-weight: bold;
   color: ${(props) => props.theme.colors.secondary};
   margin: 6px 0;

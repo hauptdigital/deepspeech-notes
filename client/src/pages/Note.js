@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { getNote, postNote, updateNote } from '../api/notes';
 import NoteContainer from '../components/NoteContainer';
+import BackLink from '../components/BackLink';
 import NoteTitle from '../components/NoteTitle';
 import Divider from '../components/Divider';
 import NoteContent from '../components/NoteContent';
@@ -98,6 +99,7 @@ function Notes() {
   return (
     <>
       <NoteContainer>
+        <BackLink />
         <NoteTitle
           onChange={handleNoteTitleChange}
           onBlur={saveNote}

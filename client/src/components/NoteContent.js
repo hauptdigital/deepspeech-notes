@@ -3,7 +3,7 @@ import noteBaseStyles from './noteBaseStyles';
 
 const NoteContent = styled.textarea`
   ${noteBaseStyles};
-  font-size: 24px;
+  font-size: 18px;
   color: ${(props) => props.theme.colors.primary};
   margin: 6px 0;
   flex-grow: 2;

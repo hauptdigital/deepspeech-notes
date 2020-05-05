@@ -5,7 +5,7 @@ const NoteContainer = styled.div`
   flex-direction: column;
   width: 100%;
   max-width: 600px;
-  min-height: 390px;
+  min-height: 290px;
 `;
 
 export default NoteContainer;
