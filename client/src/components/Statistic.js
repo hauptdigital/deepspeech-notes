@@ -21,10 +21,18 @@ const Counter = styled(Title)`
 `;
 
 function Statistic(props) {
+  const [counter, setCounter] = React.useState(0);
+  const endValue = 2000;
+  React.useEffect(() => {
+    if (counter < endValue) {
+      setCounter(counter + 1);
+    }
+  }, [counter]);
+
   return (
     <StatisticWrapper>
       <StatisticTitle>{props.title}</StatisticTitle>
-      <Counter>13</Counter>
+      <Counter>{counter.toLocaleString('en-US')}</Counter>
     </StatisticWrapper>
   );
 }
