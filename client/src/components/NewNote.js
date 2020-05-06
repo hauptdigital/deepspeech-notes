@@ -1,14 +1,19 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { useHistory } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const NewNoteButton = styled.button`
+const NewNoteButton = styled(NavLink)`
   font-family: MontSerrat;
   font-weight: bold;
+  text-decoration: none;
   border: none;
   background: linear-gradient(to right, #f3ada5, #ec693f);
   color: ${(props) => props.theme.colors.primary};
+  &:hover,
+  &:active {
+    background: linear-gradient(to right, #2c6dd5, #78c1d4);
+  }
   @media (min-width: 768px) {
     font-size: 20px;
     border-radius: 5px;
@@ -26,20 +31,14 @@ const NewNoteButton = styled.button`
     bottom: 15px;
     right: 15px;
     box-shadow: 0 0 14px 1px #00000075;
+    text-align: center;
+    display: flex;
+    align-items: center;
   }
 `;
 
 function NewNote(props) {
-  const history = useHistory();
-
-  function handleNewNoteButtonClick() {
-    history.push(`/note/`);
-  }
-  return (
-    <NewNoteButton onClick={handleNewNoteButtonClick}>
-      {props.text}
-    </NewNoteButton>
-  );
+  return <NewNoteButton to="/note/">{props.text}</NewNoteButton>;
 }
 
 NewNote.propTypes = {
