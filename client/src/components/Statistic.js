@@ -21,24 +21,21 @@ const Counter = styled(Title)`
 `;
 
 function Statistic(props) {
-  const [counter, setCounter] = React.useState(0);
-  const endValue = 2000;
-  React.useEffect(() => {
-    if (counter < endValue) {
-      setCounter(counter + 1);
-    }
-  }, [counter]);
-
   return (
     <StatisticWrapper>
       <StatisticTitle>{props.title}</StatisticTitle>
-      <Counter>{counter.toLocaleString('en-US')}</Counter>
+      <Counter>
+        {props.value.toLocaleString('en-US')}
+        {props.unit ? ' ' + props.unit : ''}
+      </Counter>
     </StatisticWrapper>
   );
 }
 
 Statistic.propTypes = {
   title: PropTypes.string,
+  value: PropTypes.number,
+  unit: PropTypes.string,
 };
 
 export default Statistic;
