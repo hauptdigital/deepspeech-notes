@@ -3,6 +3,7 @@ const http = require('http');
 const express = require('express');
 const path = require('path');
 const notes = require('./lib/routes/notes');
+const statistics = require('./lib/routes/statistics');
 const { initDatabase, createIndexes } = require('./lib/database/database');
 const { initSocket } = require('./src/socket');
 
@@ -14,8 +15,9 @@ const app = express();
 // Parse application/json for all request
 app.use(express.json());
 
-// Setup api endpoint
+// Setup api endpoints
 app.use('/api/notes', notes);
+app.use('/api/statistics', statistics);
 
 if (process.env.NODE_ENV === 'production') {
   // Web microphone socket
@@ -29,7 +31,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'client/storybook-static')));
 
   // Handle React routing, return all requests to React app
-  app.get('/', (req, res) => {
+  app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
   });
 

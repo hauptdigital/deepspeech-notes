@@ -19,6 +19,7 @@ function Notes() {
   const [noteContent, setNoteContent] = React.useState({
     text: '',
     recognizedText: '',
+    audioLength: 0,
   });
   const placeholders = { title: 'Title', note: 'Note' };
 
@@ -49,11 +50,12 @@ function Notes() {
     }
   }
 
-  function addRecognizedText(recognizedText) {
+  function addRecognizedDetails(recognized) {
     setNoteContent((noteContent) => {
       const updatedNoteContent = {
         text: noteContent.text.trim() + ' ' + noteContent.recognizedText.trim(),
-        recognizedText: ' ' + recognizedText,
+        recognizedText: ' ' + recognized.text,
+        audioLength: noteContent.audioLength + recognized.audioLength,
       };
       return updatedNoteContent;
     });
@@ -72,7 +74,11 @@ function Notes() {
       // Get note title and content if noteId is set
       getNote(noteId).then((note) => {
         setNoteTitle(note.title);
-        setNoteContent({ text: note.content, recognizedText: '' });
+        setNoteContent({
+          text: note.content,
+          recognizedText: '',
+          audioLength: note.audioLength ? note.audioLength : 0,
+        });
       });
     }
     setCurrentNodeId(noteId);
@@ -85,7 +91,7 @@ function Notes() {
 
     // While recording, add new text chunks
     function handleRecognize(recognized) {
-      addRecognizedText(recognized.text);
+      addRecognizedDetails(recognized);
     }
 
     const socket = getSocket();
