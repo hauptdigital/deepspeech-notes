@@ -23,7 +23,7 @@ const MenuWrapper = styled.div`
   }
 `;
 
-const MenuLinkCard = styled.div`
+const MenuLink = styled(Link)`
   transform: ${(props) =>
     props.isOpen ? 'translateX(0)' : 'translateX(100%)'};
   transition: transform ${(props) => props.slideInDelay}s;
@@ -36,13 +36,17 @@ const MenuLinkCard = styled.div`
   background-color: ${(props) => props.backgroundColor};
   z-index: ${(props) => props.stackOrder};
   margin-top: -35px;
+  text-decoration: none;
+  transition: 0.3s;
+  &:hover {
+    filter: brightness(115%);
+  }
 `;
 
-const MenuLink = styled(Link)`
+const MenuLinkText = styled.span`
   font-size: 20px;
   font-weight: bold;
   padding-top: 25px;
-  text-decoration: none;
   align-self: center;
 `;
 
@@ -55,15 +59,16 @@ const menuData = {
 function Menu(props) {
   const menuItems = Object.values(menuData).map((item, index) => {
     return (
-      <MenuLinkCard
+      <MenuLink
         key={item.title}
+        to={item.link}
         isOpen={props.menuIsOpen}
         backgroundColor={item.color}
         slideInDelay={(index + 1) * 0.3}
         stackOrder={100 - index}
       >
-        <MenuLink to={item.link}>{item.title}</MenuLink>
-      </MenuLinkCard>
+        <MenuLinkText>{item.title}</MenuLinkText>
+      </MenuLink>
     );
   });
 
