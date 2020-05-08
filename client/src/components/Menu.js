@@ -13,6 +13,7 @@ const MenuWrapper = styled.div`
   top: 0;
   right: 0;
   transition: transform 0.3s;
+  z-index: 1;
 
   transform: ${(props) =>
     props.isOpen ? 'translateX(0)' : 'translateX(100%)'};
@@ -33,7 +34,7 @@ const MenuLinkCard = styled.div`
   justify-content: center;
   align-content: center;
   background-color: ${(props) => props.backgroundColor};
-  z-index: ${(props) => props.slideInDelay};
+  z-index: ${(props) => props.stackOrder};
   margin-top: -35px;
 `;
 
@@ -59,6 +60,7 @@ function Menu(props) {
         isOpen={props.menuIsOpen}
         backgroundColor={item.color}
         slideInDelay={(index + 1) * 0.3}
+        stackOrder={100 - index}
       >
         <MenuLink to={item.link}>{item.title}</MenuLink>
       </MenuLinkCard>
