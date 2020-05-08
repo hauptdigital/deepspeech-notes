@@ -79,6 +79,7 @@ NoteContentReadOnly.propTypes = {
   noteContent: PropTypes.exact({
     text: PropTypes.string,
     recognizedText: PropTypes.string,
+    audioLength: PropTypes.number,
   }),
   placeholder: PropTypes.string,
 };

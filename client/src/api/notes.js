@@ -43,3 +43,16 @@ export function updateNote(note, noteId) {
     body: JSON.stringify(note),
   }).then((response) => response.json());
 }
+
+export function getStatistics() {
+  return fetch(`/api/statistics/`, {
+    method: 'GET',
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      return response;
+    })
+    .then((response) => response.json());
+}
