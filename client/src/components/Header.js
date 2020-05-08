@@ -14,15 +14,15 @@ const Navigation = styled.header`
 function Header() {
   const [menuIsOpen, setMenuIsOpen] = React.useState(false);
 
-  function handleMenuIconClick() {
+  function handleMenuClick() {
     setMenuIsOpen(!menuIsOpen);
   }
 
   return (
     <Navigation>
       <Logo />
-      <MenuIcon onMenuIconClick={handleMenuIconClick} menuIsOpen={menuIsOpen} />
-      <Menu menuIsOpen={menuIsOpen} />
+      <MenuIcon onMenuIconClick={handleMenuClick} menuIsOpen={menuIsOpen} />
+      <Menu onMenuClick={handleMenuClick} menuIsOpen={menuIsOpen} />
     </Navigation>
   );
 }

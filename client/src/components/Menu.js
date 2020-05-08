@@ -26,7 +26,7 @@ const MenuWrapper = styled.div`
 const MenuLink = styled(Link)`
   transform: ${(props) =>
     props.isOpen ? 'translateX(0)' : 'translateX(100%)'};
-  transition: transform ${(props) => props.slideInDelay}s;
+  transition: transform ${(props) => props.slideInDelay}s, filter 0.3s;
   border-radius: 25px 0 0 25px;
   width: 100%;
   height: 100%;
@@ -37,7 +37,6 @@ const MenuLink = styled(Link)`
   z-index: ${(props) => props.stackOrder};
   margin-top: -35px;
   text-decoration: none;
-  transition: 0.3s;
   &:hover {
     filter: brightness(115%);
   }
@@ -62,6 +61,7 @@ function Menu(props) {
       <MenuLink
         key={item.title}
         to={item.link}
+        onClick={props.onMenuClick}
         isOpen={props.menuIsOpen}
         backgroundColor={item.color}
         slideInDelay={(index + 1) * 0.3}
@@ -77,6 +77,7 @@ function Menu(props) {
 
 Menu.propTypes = {
   menuIsOpen: PropTypes.bool,
+  onMenuClick: PropTypes.func,
 };
 
 export default Menu;
