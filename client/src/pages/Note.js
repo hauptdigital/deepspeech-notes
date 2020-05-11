@@ -38,30 +38,6 @@ function Notes() {
     if (!isRecording) {
       await startRecording();
       setIsRecording(true);
-      setTimeout(
-        () =>
-          addRecognizedDetails({
-            text: 'hello new fishes coding bootcamp',
-            audioLength: 480,
-          }),
-        3000
-      );
-      setTimeout(
-        () =>
-          addRecognizedDetails({
-            text: 'this is a demonstration of speech to text',
-            audioLength: 480,
-          }),
-        6000
-      );
-      setTimeout(
-        () =>
-          addRecognizedDetails({
-            text: 'remember to have fun',
-            audioLength: 480,
-          }),
-        9000
-      );
     } else {
       await stopRecording();
       setIsRecording(false);
