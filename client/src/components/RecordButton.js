@@ -31,7 +31,9 @@ const RecordButtonInput = styled.button`
   cursor: pointer;
 `;
 
-const RecordButtonIcon = styled(MicrophoneIcon)`
+const RecordButtonIcon = styled(({ isRecording, ...themeProps }) => (
+  <MicrophoneIcon {...themeProps} />
+))`
   width: 40px;
   height: 40px;
   & > #gradient-vertical {
