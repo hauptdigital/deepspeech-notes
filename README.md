@@ -1,11 +1,3 @@
-<div align="center">
-
-![alt text](https://github.com/hauptdigital/deepspeech-notes/blob/master/client/src/assets/logo.svg?raw=true)
-
-# DeepSpeechNotes
-
-</div>
-
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
@@ -13,6 +5,14 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/hauptdigital/deepspeech-notes?style=flat-square)
 ![GitHub top language,](https://img.shields.io/github/languages/top/hauptdigital/deepspeech-notes?style=flat-square)
 ![GitHub language count](https://img.shields.io/github/languages/count/hauptdigital/deepspeech-notes?style=flat-square)
+
+<div align="center">
+
+![alt text](https://github.com/hauptdigital/deepspeech-notes/blob/master/client/src/assets/logo.svg?raw=true)
+
+# DeepSpeechNotes
+
+</div>
 
 ## Table of Contents
 
