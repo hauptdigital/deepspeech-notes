@@ -23,7 +23,11 @@ const MenuWrapper = styled.div`
   }
 `;
 
-const MenuLink = styled(Link)`
+const MenuLink = styled(
+  ({ isOpen, slideInDelay, backgroundColor, stackOrder, ...linkProps }) => (
+    <Link {...linkProps} />
+  )
+)`
   transform: ${(props) =>
     props.isOpen ? 'translateX(0)' : 'translateX(100%)'};
   transition: transform ${(props) => props.slideInDelay}s, filter 0.3s;
