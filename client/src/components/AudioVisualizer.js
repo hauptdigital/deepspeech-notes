@@ -11,28 +11,18 @@ const AudioWaveForm = styled.canvas`
 `;
 
 function AudioVisualizer(props) {
-  const [animationFrameId, setAnimationFrameId] = React.useState();
-
   const canvas = useRef(null);
 
-  let width;
-  let height;
-
-  function resetCanvas(canvasContext) {
-    canvas.current.width = canvas.current.offsetWidth;
-    canvas.current.height = canvas.current.offsetHeight;
-    width = canvas.current.offsetWidth;
-    height = canvas.current.offsetHeight;
-
-    // clear previous visualization in canvas
-    canvasContext.clearRect(0, 0, width, height);
-  }
-
   React.useEffect(() => {
+    const currentCanvas = canvas.current;
+    const canvasContext = currentCanvas.getContext('2d');
+
     let audioAnalyser;
+    let animationFrameId;
     let bufferLength;
     let dataArray;
-    let canvasContext;
+    let width;
+    let height;
 
     function draw() {
       audioAnalyser.getByteFrequencyData(dataArray);
@@ -44,7 +34,7 @@ function AudioVisualizer(props) {
       let x = barWidth;
 
       for (let i = 0; i < bufferLength; i++) {
-        barHeight = dataArray[i] / 3;
+        barHeight = dataArray[i] / 2;
 
         // Draw bar
         canvasContext.fillStyle = theme.colors.secondary;
@@ -81,11 +71,10 @@ function AudioVisualizer(props) {
         x += barWidth + (width / bufferLength) * 0.65;
       }
 
-      setAnimationFrameId(requestAnimationFrame(draw));
+      animationFrameId = requestAnimationFrame(draw);
     }
 
     function initializeDrawing() {
-      canvasContext = canvas.current.getContext('2d');
       // Create audio analyser from audio context and connect to media stream source from microphone
       audioAnalyser = audioContext.createAnalyser();
 
@@ -100,25 +89,37 @@ function AudioVisualizer(props) {
       resetCanvas(canvasContext);
 
       // Start drawing
-      setAnimationFrameId(requestAnimationFrame(draw));
+      animationFrameId = requestAnimationFrame(draw);
     }
 
-    function stopDrawing() {
-      if (animationFrameId > 0) {
-        cancelAnimationFrame(animationFrameId);
+    function resetCanvas(canvasContext) {
+      currentCanvas.width = currentCanvas.offsetWidth;
+      currentCanvas.height = currentCanvas.offsetHeight;
+      width = currentCanvas.offsetWidth;
+      height = currentCanvas.offsetHeight;
 
-        // clear previous visualization in canvas
-        canvasContext = canvas.current.getContext('2d');
-        resetCanvas(canvasContext);
-      }
+      // clear previous visualization in canvas
+      canvasContext.clearRect(0, 0, width, height);
     }
 
     if (props.isRecording) {
       initializeDrawing();
-    } else {
-      stopDrawing();
     }
+
+    return () => {
+      function stopDrawing() {
+        if (animationFrameId > 0) {
+          cancelAnimationFrame(animationFrameId);
+
+          // clear previous visualization in canvas
+          resetCanvas(canvasContext);
+        }
+      }
+
+      stopDrawing();
+    };
   }, [props.isRecording]);
+
   return <AudioWaveForm ref={canvas} />;
 }
 
