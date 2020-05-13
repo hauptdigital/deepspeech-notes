@@ -1,5 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import cogoToast from 'cogo-toast';
 import { getNote, postNote, updateNote } from '../api/notes';
 import NoteContainer from '../components/NoteContainer';
 import BackLink from '../components/BackLink';
@@ -26,10 +27,14 @@ function Notes() {
   async function saveNote() {
     if (currentNodeId) {
       // Update note in DB if there is a noteId collected from parameters
-      updateNote({ noteTitle, noteContent }, currentNodeId);
+      updateNote({ noteTitle, noteContent }, currentNodeId).then(
+        cogoToast.success('Note updated!')
+      );
     } else {
       // Create new note in DB
-      const createdNoteId = await postNote({ noteTitle, noteContent });
+      const createdNoteId = await postNote({ noteTitle, noteContent }).then(
+        cogoToast.success('Note saved!')
+      );
       setCurrentNodeId(createdNoteId);
     }
   }
