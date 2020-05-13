@@ -2,30 +2,14 @@ const DeepSpeech = require('deepspeech');
 
 // Language Model
 
-const modelDirectory = './src/model';
-
-const modelOptions = {
-  // The beam width used by the decoder. A larger beam width generates better results at the cost of decoding time.
-  BEAM_WIDTH: 1024,
-  // The alpha hyperparameter of the CTC decoder. Language Model weight.
-  LM_ALPHA: 0.75,
-  // The beta hyperparameter of the CTC decoder. Word insertion weight.
-  LM_BETA: 1.85,
-};
+const modelDirectory = './src/model/';
 
 function createLanguageModel() {
-  const modelPath = modelDirectory + '/output_graph.pbmm';
-  const modelBinaryPath = modelDirectory + '/lm.binary';
-  const triePath = modelDirectory + '/trie';
-  const model = new DeepSpeech.Model(modelPath, modelOptions.BEAM_WIDTH);
+  const modelPath = modelDirectory + 'deepspeech-0.7.1-models.pbmm';
+  const scorerPath = modelDirectory + 'deepspeech-0.7.1-models.scorer';
 
-  // Enable decoding using beam scoring with a KenLM language model.
-  model.enableDecoderWithLM(
-    modelBinaryPath,
-    triePath,
-    modelOptions.LM_ALPHA,
-    modelOptions.LM_BETA
-  );
+  const model = new DeepSpeech.Model(modelPath);
+  model.enableExternalScorer(scorerPath);
 
   return model;
 }
