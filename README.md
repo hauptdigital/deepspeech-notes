@@ -4,24 +4,14 @@
 [![Issues][issues-shield]][issues-url]
 ![GitHub top language,](https://img.shields.io/github/languages/top/hauptdigital/deepspeech-notes?style=flat-square)
 
-<div align="center">
-
-![alt text](https://github.com/hauptdigital/deepspeech-notes/blob/master/client/src/assets/logo.svg?raw=true)
-
-# DeepSpeechNotes
-
-</div>
+[![DeepSpeechNotes Screen Shot][product-screenshot]](https://deepspeech.haupt.digital)
 
 ## Table of Contents
 
 - [About the Project](#about-the-project)
   - [Built With](#built-with)
 - [Get Started](#get-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-- [Usage](#usage)
-- [Roadmap](#roadmap)
-- [Contributing](#contributing)
+- [Roadmap and Contributing](#roadmap-and-contributing)
 - [License](#license)
 - [Contact](#contact)
 - [Acknowledgements](#acknowledgements)
@@ -31,6 +21,10 @@
 DeepSpeechNotes is a note taking app that uses Mozilla's DeepSpeech, Web Audio API and Node Voice Activity Detection to transcribe speech into text on the go.
 
 It is my graduation project that was coded from scratch in 4 weeks. My main goal was to showcase current Open Source Text-To-Speech technology.
+
+I wanted to learn something new in terms of technology, so I picked the topics Machine Learning and Speech-To-Text recognition and apply them practically. The result is DeepSpeechNotes, a note taking app that transcribes voice in near real-time.
+
+[Go to Demo](https://deepspeech-notes.haupt.digital)
 
 ### 🚀 Built With
 
@@ -50,14 +44,6 @@ It is my graduation project that was coded from scratch in 4 weeks. My main goal
 - DeepSpeech
 - Node Voice Activity Detection
 - Socket.io
-
-## About The Project
-
-[![DeepSpeechNotes Screen Shot][product-screenshot]](https://deepspeech.haupt.digital)
-
-[Go to Demo](https://deepspeech-notes.haupt.digital)
-
-I wanted to learn something new in terms of technology, so I picked the topics Machine Learning and Speech-To-Text recognition and apply them practically. The result is DeepSpeechNotes, a note taking app that transcribes voice in near real-time.
 
 ## Get Started
 
