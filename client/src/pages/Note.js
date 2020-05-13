@@ -28,12 +28,16 @@ function Notes() {
     if (currentNodeId) {
       // Update note in DB if there is a noteId collected from parameters
       updateNote({ noteTitle, noteContent }, currentNodeId).then(
-        cogoToast.success('Note updated!')
+        cogoToast.success('Note updated!', {
+          bar: { style: 'none' },
+        })
       );
     } else {
       // Create new note in DB
       const createdNoteId = await postNote({ noteTitle, noteContent }).then(
-        cogoToast.success('Note saved!')
+        cogoToast.success('Note saved!', {
+          bar: { style: 'none' },
+        })
       );
       setCurrentNodeId(createdNoteId);
     }

@@ -24,6 +24,12 @@ function GlobalStyle() {
         a:visited {
           color: ${theme.colors.primary};
         }
+        .ct-toast {
+          color: ${theme.colors.primary};
+          background-color: ${theme.colors.background};
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+          border-radius: 5px;
+        }
       `}
     />
   );
