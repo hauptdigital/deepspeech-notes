@@ -24,6 +24,19 @@ function GlobalStyle() {
         a:visited {
           color: ${theme.colors.primary};
         }
+        body::-webkit-scrollbar-track {
+          border-radius: 10px;
+          background: transparent;
+        }
+
+        body::-webkit-scrollbar {
+          width: 10px;
+        }
+
+        body::-webkit-scrollbar-thumb {
+          border-radius: 10px;
+          background-color: ${theme.colors.light};
+        }
       `}
     />
   );
