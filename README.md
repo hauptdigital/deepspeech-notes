@@ -2,9 +2,7 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-![GitHub repo size](https://img.shields.io/github/repo-size/hauptdigital/deepspeech-notes?style=flat-square)
 ![GitHub top language,](https://img.shields.io/github/languages/top/hauptdigital/deepspeech-notes?style=flat-square)
-![GitHub language count](https://img.shields.io/github/languages/count/hauptdigital/deepspeech-notes?style=flat-square)
 
 <div align="center">
 
@@ -57,9 +55,13 @@ It is my graduation project that was coded from scratch in 4 weeks. My main goal
 
 [![DeepSpeechNotes Screen Shot][product-screenshot]](https://deepspeech.haupt.digital)
 
+[Go to Demo](https://deepspeech-notes.haupt.digital)
+
+I wanted to learn something new in terms of technology, so I picked the topics Machine Learning and Speech-To-Text recognition and apply them practically. The result is DeepSpeechNotes, a note taking app that transcribes voice in near real-time.
+
 ## Get Started
 
-To deploy this application, your production environment must meet the following requirements:
+To use DeepSpeechNotes, you must meet the following requirements:
 
 1. node.js
 2. npm
@@ -92,7 +94,7 @@ Contributions are **greatly appreciated**:
 
 ## License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Distributed under the MIT License. See [LICENSE](LICENSE.txt) for more information.
 
 ## Contact
 
