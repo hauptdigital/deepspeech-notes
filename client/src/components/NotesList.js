@@ -9,25 +9,29 @@ const NotesListWrapper = styled.div`
 `;
 
 function NotesList(props) {
-  const renderNoteList = props.notes.map((note) => {
-    const noteHasTitle = note.title ? true : false;
-    const noteHasContent = note.content ? true : false;
-    if (noteHasTitle || noteHasContent) {
-      return (
-        <NoteListView
-          key={note._id}
-          searchQuery={props.searchQuery}
-          noteId={note._id}
-          noteHasTitle={noteHasTitle}
-          noteHasContent={noteHasContent}
-          content={note.content}
-          title={note.title}
-        />
-      );
-    }
-  });
-
-  return <NotesListWrapper>{renderNoteList}</NotesListWrapper>;
+  return (
+    <NotesListWrapper>
+      {props.notes.map((note) => {
+        const noteHasTitle = note.title ? true : false;
+        const noteHasContent = note.content ? true : false;
+        if (noteHasTitle || noteHasContent) {
+          return (
+            <NoteListView
+              key={note._id}
+              searchQuery={props.searchQuery}
+              noteId={note._id}
+              noteHasTitle={noteHasTitle}
+              noteHasContent={noteHasContent}
+              content={note.content}
+              title={note.title}
+            />
+          );
+        } else {
+          return null;
+        }
+      })}
+    </NotesListWrapper>
+  );
 }
 
 NotesList.propTypes = {

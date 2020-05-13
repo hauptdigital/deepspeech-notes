@@ -3,7 +3,7 @@ import TextChunk from '../components/TextChunk';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import noteBaseStyles from './noteBaseStyles';
-import { CSSTransitionGroup } from 'react-transition-group';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 const NoteContentTextFromAudio = styled.div`
   ${noteBaseStyles};
@@ -35,6 +35,7 @@ const FadeoutText = styled.div`
 function NoteContentReadOnly(props) {
   const [showFadeoutText, setShowFadeoutText] = React.useState(false);
   const scrollReference = useRef(null);
+  const newTextRef = React.useRef(null);
 
   React.useEffect(() => {
     // Scroll to bottom of noteContent div when new text appears
@@ -55,20 +56,18 @@ function NoteContentReadOnly(props) {
           <TextChunk>{props.noteContent.text}</TextChunk>
         )}
         {props.noteContent.recognizedText !== '' && (
-          <CSSTransitionGroup
-            transitionName="fadeIn"
-            transitionAppear={true}
-            transitionLeave={false}
-            transitionEnterTimeout={300}
-            transitionAppearTimeout={300}
-          >
-            <TextChunk
+          <TransitionGroup component={null} exit={false} appear={true}>
+            <CSSTransition
               key={props.noteContent.text + props.noteContent.recognizedText}
-              isNew={true}
+              nodeRef={newTextRef}
+              timeout={300}
+              classNames="fadeIn"
             >
-              {props.noteContent.recognizedText}
-            </TextChunk>
-          </CSSTransitionGroup>
+              <TextChunk ref={newTextRef} isNew={true}>
+                {props.noteContent.recognizedText}
+              </TextChunk>
+            </CSSTransition>
+          </TransitionGroup>
         )}
       </NoteContentTextFromAudio>
     </>

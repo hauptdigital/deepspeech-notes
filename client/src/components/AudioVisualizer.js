@@ -11,113 +11,115 @@ const AudioWaveForm = styled.canvas`
 `;
 
 function AudioVisualizer(props) {
-  const [animationFrameId, setAnimationFrameId] = React.useState();
-
   const canvas = useRef(null);
 
-  let audioAnalyser;
-  let bufferLength;
-  let dataArray;
-  let canvasContext;
-  let width;
-  let height;
+  React.useEffect(() => {
+    const currentCanvas = canvas.current;
+    const canvasContext = currentCanvas.getContext('2d');
 
-  function draw() {
-    audioAnalyser.getByteFrequencyData(dataArray);
-    canvasContext.fillStyle = theme.colors.background;
-    canvasContext.fillRect(0, 0, width, height);
+    let audioAnalyser;
+    let animationFrameId;
+    let bufferLength;
+    let dataArray;
+    let width;
+    let height;
 
-    const barWidth = (width / bufferLength) * 0.35;
-    let barHeight;
-    let x = barWidth;
+    function draw() {
+      audioAnalyser.getByteFrequencyData(dataArray);
+      canvasContext.fillStyle = theme.colors.background;
+      canvasContext.fillRect(0, 0, width, height);
 
-    for (let i = 0; i < bufferLength; i++) {
-      barHeight = dataArray[i] / 3;
+      const barWidth = (width / bufferLength) * 0.35;
+      let barHeight;
+      let x = barWidth;
 
-      // Draw bar
-      canvasContext.fillStyle = theme.colors.secondary;
-      canvasContext.fillRect(
-        x,
-        height / 2 - barHeight / 2,
-        barWidth,
-        barHeight
-      );
+      for (let i = 0; i < bufferLength; i++) {
+        barHeight = dataArray[i] / 2;
 
-      // Draw rounded end top
-      canvasContext.beginPath();
-      canvasContext.arc(
-        x + barWidth / 2,
-        height / 2 - barHeight / 2,
-        barWidth / 2,
-        0,
-        2 * Math.PI
-      );
-      canvasContext.fill();
+        // Draw bar
+        canvasContext.fillStyle = theme.colors.secondary;
+        canvasContext.fillRect(
+          x,
+          height / 2 - barHeight / 2,
+          barWidth,
+          barHeight
+        );
 
-      // Draw rounded end bottom
-      canvasContext.beginPath();
-      canvasContext.arc(
-        x + barWidth / 2,
-        height / 2 + barHeight / 2,
-        barWidth / 2,
-        0,
-        2 * Math.PI
-      );
-      canvasContext.fill();
+        // Draw rounded end top
+        canvasContext.beginPath();
+        canvasContext.arc(
+          x + barWidth / 2,
+          height / 2 - barHeight / 2,
+          barWidth / 2,
+          0,
+          2 * Math.PI
+        );
+        canvasContext.fill();
 
-      // Update x for next bar position
-      x += barWidth + (width / bufferLength) * 0.65;
+        // Draw rounded end bottom
+        canvasContext.beginPath();
+        canvasContext.arc(
+          x + barWidth / 2,
+          height / 2 + barHeight / 2,
+          barWidth / 2,
+          0,
+          2 * Math.PI
+        );
+        canvasContext.fill();
+
+        // Update x for next bar position
+        x += barWidth + (width / bufferLength) * 0.65;
+      }
+
+      animationFrameId = requestAnimationFrame(draw);
     }
 
-    setAnimationFrameId(requestAnimationFrame(draw));
-  }
+    function initializeDrawing() {
+      // Create audio analyser from audio context and connect to media stream source from microphone
+      audioAnalyser = audioContext.createAnalyser();
 
-  function initializeDrawing() {
-    canvasContext = canvas.current.getContext('2d');
-    // Create audio analyser from audio context and connect to media stream source from microphone
-    audioAnalyser = audioContext.createAnalyser();
+      mediaStreamSource.connect(audioAnalyser);
 
-    mediaStreamSource.connect(audioAnalyser);
+      // We want to display 16 bars so Fast Fourier Transform (ttf) is set to 32 and Uint8Array is chosen
+      audioAnalyser.fftSize = 32;
+      bufferLength = audioAnalyser.frequencyBinCount;
+      dataArray = new Uint8Array(bufferLength);
 
-    // We want to display 16 bars so Fast Fourier Transform (ttf) is set to 32 and Uint8Array is chosen
-    audioAnalyser.fftSize = 32;
-    bufferLength = audioAnalyser.frequencyBinCount;
-    dataArray = new Uint8Array(bufferLength);
+      // Reset canvas
+      resetCanvas(canvasContext);
 
-    // Reset canvas
-    resetCanvas(canvasContext);
+      // Start drawing
+      animationFrameId = requestAnimationFrame(draw);
+    }
 
-    // Start drawing
-    setAnimationFrameId(requestAnimationFrame(draw));
-  }
-
-  function stopDrawing() {
-    if (animationFrameId > 0) {
-      cancelAnimationFrame(animationFrameId);
+    function resetCanvas(canvasContext) {
+      currentCanvas.width = currentCanvas.offsetWidth;
+      currentCanvas.height = currentCanvas.offsetHeight;
+      width = currentCanvas.offsetWidth;
+      height = currentCanvas.offsetHeight;
 
       // clear previous visualization in canvas
-      canvasContext = canvas.current.getContext('2d');
-      resetCanvas(canvasContext);
+      canvasContext.clearRect(0, 0, width, height);
     }
-  }
 
-  function resetCanvas(canvasContext) {
-    canvas.current.width = canvas.current.offsetWidth;
-    canvas.current.height = canvas.current.offsetHeight;
-    width = canvas.current.offsetWidth;
-    height = canvas.current.offsetHeight;
-
-    // clear previous visualization in canvas
-    canvasContext.clearRect(0, 0, width, height);
-  }
-
-  React.useEffect(() => {
     if (props.isRecording) {
       initializeDrawing();
-    } else {
-      stopDrawing();
     }
+
+    return () => {
+      function stopDrawing() {
+        if (animationFrameId > 0) {
+          cancelAnimationFrame(animationFrameId);
+
+          // clear previous visualization in canvas
+          resetCanvas(canvasContext);
+        }
+      }
+
+      stopDrawing();
+    };
   }, [props.isRecording]);
+
   return <AudioWaveForm ref={canvas} />;
 }
 

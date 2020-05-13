@@ -12,7 +12,7 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
-    "react-transition-group": "^1.2.1",
+    "react-transition-group": "^4.4.1",
     "socket.io-client": "^2.3.0",
     "throttle-debounce": "^2.1.0"
   },

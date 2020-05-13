@@ -13,6 +13,7 @@ const MenuWrapper = styled.div`
   top: 0;
   right: 0;
   transition: transform 0.3s;
+  z-index: 1;
 
   transform: ${(props) =>
     props.isOpen ? 'translateX(0)' : 'translateX(100%)'};
@@ -22,10 +23,14 @@ const MenuWrapper = styled.div`
   }
 `;
 
-const MenuLinkCard = styled.div`
+const MenuLink = styled(
+  ({ isOpen, slideInDelay, backgroundColor, stackOrder, ...linkProps }) => (
+    <Link {...linkProps} />
+  )
+)`
   transform: ${(props) =>
     props.isOpen ? 'translateX(0)' : 'translateX(100%)'};
-  transition: transform ${(props) => props.slideInDelay}s;
+  transition: transform ${(props) => props.slideInDelay}s, filter 0.3s;
   border-radius: 25px 0 0 25px;
   width: 100%;
   height: 100%;
@@ -33,15 +38,18 @@ const MenuLinkCard = styled.div`
   justify-content: center;
   align-content: center;
   background-color: ${(props) => props.backgroundColor};
-  z-index: ${(props) => props.slideInDelay};
+  z-index: ${(props) => props.stackOrder};
   margin-top: -35px;
+  text-decoration: none;
+  &:hover {
+    filter: brightness(115%);
+  }
 `;
 
-const MenuLink = styled(Link)`
+const MenuLinkText = styled.span`
   font-size: 20px;
   font-weight: bold;
   padding-top: 25px;
-  text-decoration: none;
   align-self: center;
 `;
 
@@ -54,14 +62,17 @@ const menuData = {
 function Menu(props) {
   const menuItems = Object.values(menuData).map((item, index) => {
     return (
-      <MenuLinkCard
+      <MenuLink
         key={item.title}
+        to={item.link}
+        onClick={props.onMenuClick}
         isOpen={props.menuIsOpen}
         backgroundColor={item.color}
         slideInDelay={(index + 1) * 0.3}
+        stackOrder={100 - index}
       >
-        <MenuLink to={item.link}>{item.title}</MenuLink>
-      </MenuLinkCard>
+        <MenuLinkText>{item.title}</MenuLinkText>
+      </MenuLink>
     );
   });
 
@@ -70,6 +81,7 @@ function Menu(props) {
 
 Menu.propTypes = {
   menuIsOpen: PropTypes.bool,
+  onMenuClick: PropTypes.func,
 };
 
 export default Menu;
