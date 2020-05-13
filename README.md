@@ -4,7 +4,7 @@
 [![Issues][issues-shield]][issues-url]
 ![GitHub top language,](https://img.shields.io/github/languages/top/hauptdigital/deepspeech-notes?style=flat-square)
 
-[![DeepSpeechNotes Screen Shot][product-screenshot]](https://deepspeech.haupt.digital)
+# DeepSpeechNotes
 
 ## Table of Contents
 
@@ -21,6 +21,12 @@
 DeepSpeechNotes is a note taking app that uses Mozilla's DeepSpeech, Web Audio API and Node Voice Activity Detection to transcribe speech into text on the go.
 
 It is my graduation project that was coded from scratch in 4 weeks. My main goal was to showcase current Open Source Text-To-Speech technology.
+
+<div align="center">
+
+[![DeepSpeechNotes Screen Shot][product-screenshot]](https://deepspeech.haupt.digital)
+
+</div>
 
 I wanted to learn something new in terms of technology, so I picked the topics Machine Learning and Speech-To-Text recognition and apply them practically. The result is DeepSpeechNotes, a note taking app that transcribes voice in near real-time.
 
