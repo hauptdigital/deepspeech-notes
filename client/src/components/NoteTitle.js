@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import noteBaseStyles from './noteBaseStyles';
 
-const NoteTitle = styled.input`
+const NoteTitle = styled.textarea`
   ${noteBaseStyles};
   font-size: 20px;
   font-weight: bold;
@@ -14,6 +14,19 @@ const NoteTitle = styled.input`
   &::placeholder {
     color: ${(props) => props.theme.colors.altTwo};
     opacity: 0.4;
+  }
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: ${(props) => props.theme.colors.light};
   }
 `;
 

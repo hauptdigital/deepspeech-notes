@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import cogoToast from 'cogo-toast';
-import { getNote, postNote, updateNote } from '../api/notes';
+import { getNote, updateNote } from '../api/notes';
+import Container from '../components/Container';
+import { ReactComponent as Loading } from '../assets/loading.svg';
 import NoteContainer from '../components/NoteContainer';
 import BackLink from '../components/BackLink';
 import NoteTitle from '../components/NoteTitle';
@@ -14,34 +16,21 @@ import { startRecording, stopRecording, getSocket } from '../utils/audio';
 
 function Notes() {
   const { noteId } = useParams();
-  const [currentNodeId, setCurrentNodeId] = React.useState({});
+  const [isLoading, setIsLoading] = React.useState(true);
   const [isRecording, setIsRecording] = React.useState(false);
-  const [noteTitle, setNoteTitle] = React.useState('');
-  const [noteContent, setNoteContent] = React.useState({
-    text: '',
-    recognizedText: '',
+
+  const [note, setNote] = React.useState({
+    title: '',
+    content: '',
     audioLength: 0,
   });
-  const placeholders = { title: 'Title', note: 'Note' };
 
-  async function saveNote() {
-    if (currentNodeId) {
-      // Update note in DB if there is a noteId collected from parameters
-      updateNote({ noteTitle, noteContent }, currentNodeId).then(
-        cogoToast.success('Note updated!', {
-          bar: { style: 'none' },
-        })
-      );
-    } else {
-      // Create new note in DB
-      const createdNoteId = await postNote({ noteTitle, noteContent }).then(
-        cogoToast.success('Note saved!', {
-          bar: { style: 'none' },
-        })
-      );
-      setCurrentNodeId(createdNoteId);
-    }
-  }
+  const [noteTitle, setNoteTitle] = React.useState('');
+  const [noteText, setNoteText] = React.useState('');
+  const [noteRecognizedText, setNoteRecognizedText] = React.useState('');
+  const [noteAudioLength, setNoteAudioLength] = React.useState(0);
+
+  const placeholders = { title: 'Title', note: 'Note' };
 
   async function handleRecordButtonClick() {
     if (!isRecording) {
@@ -50,24 +39,8 @@ function Notes() {
     } else {
       await stopRecording();
       setIsRecording(false);
-      setNoteContent({
-        text: noteContent.text.trim() + ' ' + noteContent.recognizedText.trim(),
-        recognizedText: '',
-      });
-
-      saveNote();
+      addRecognizedText();
     }
-  }
-
-  function addRecognizedDetails(recognized) {
-    setNoteContent((noteContent) => {
-      const updatedNoteContent = {
-        text: noteContent.text.trim() + ' ' + noteContent.recognizedText.trim(),
-        recognizedText: ' ' + recognized.text,
-        audioLength: noteContent.audioLength + recognized.audioLength,
-      };
-      return updatedNoteContent;
-    });
   }
 
   function handleNoteTitleChange(event) {
@@ -75,26 +48,46 @@ function Notes() {
   }
 
   function handleNoteContentChange(event) {
-    setNoteContent({ text: event.target.value, recognizedText: '' });
+    setNoteText(event.target.value);
   }
+
+  function handleNoteBlur() {
+    setNote({
+      title: noteTitle,
+      content: noteText,
+      audioLength: noteAudioLength,
+    });
+  }
+
+  const addRecognizedDetails = useCallback(
+    (recognized) => {
+      setNoteText(noteText.trim() + ' ' + noteRecognizedText.trim());
+      setNoteRecognizedText(' ' + recognized.text);
+      setNoteAudioLength(noteAudioLength + recognized.noteAudioLength);
+    },
+    [noteText, noteRecognizedText, noteAudioLength]
+  );
+
+  const addRecognizedText = useCallback(() => {
+    setNoteText(noteText.trim() + ' ' + noteRecognizedText.trim());
+    setNoteRecognizedText('');
+  }, [noteText, noteRecognizedText]);
 
   React.useEffect(() => {
     if (noteId) {
       // Get note title and content if noteId is set
       getNote(noteId).then((note) => {
-        setNoteTitle(note.title);
-        setNoteContent({
-          text: note.content,
-          recognizedText: '',
-          audioLength: note.audioLength ? note.audioLength : 0,
-        });
+        setNoteTitle(note.title ? note.title : '');
+        setNoteText(note.content ? note.content : '');
+        setNoteAudioLength(note.audioLength ? note.audioLength : 0);
+        setIsLoading(false);
       });
     }
-    setCurrentNodeId(noteId);
   }, [noteId]);
 
   React.useEffect(() => {
     if (!isRecording) {
+      // When recording stops, add recognized text to note text
       return;
     }
 
@@ -109,7 +102,33 @@ function Notes() {
     return () => {
       socket.removeListener('recognize', handleRecognize);
     };
-  }, [isRecording]);
+  }, [isRecording, addRecognizedDetails, addRecognizedText]);
+
+  React.useEffect(() => {
+    if (isLoading || (note.title === '' && note.content === '')) {
+      return;
+    }
+
+    async function saveNote() {
+      updateNote(note, noteId).then((response) => {
+        if (response.modifiedCount === 1) {
+          cogoToast.success('Note updated!', {
+            bar: { style: 'none' },
+          });
+        }
+      });
+    }
+
+    saveNote();
+  }, [note, isLoading, noteId]);
+
+  if (isLoading) {
+    return (
+      <Container>
+        <Loading />
+      </Container>
+    );
+  }
 
   return (
     <>
@@ -117,21 +136,22 @@ function Notes() {
         <BackLink />
         <NoteTitle
           onChange={handleNoteTitleChange}
-          onBlur={saveNote}
+          onBlur={handleNoteBlur}
           value={noteTitle}
           placeholder={placeholders.title}
         />
         <Divider />
         {isRecording ? (
           <NoteContentReadOnly
-            noteContent={noteContent}
+            noteText={noteText}
+            noteRecognizedText={noteRecognizedText}
             placeholder={placeholders.note}
           />
         ) : (
           <NoteContent
             onChange={handleNoteContentChange}
-            onBlur={saveNote}
-            value={noteContent.text}
+            onBlur={handleNoteBlur}
+            value={noteText}
             placeholder={placeholders.note}
           />
         )}

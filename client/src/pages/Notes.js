@@ -1,6 +1,9 @@
 import React, { useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
+import cogoToast from 'cogo-toast';
 import { throttle } from 'throttle-debounce';
 import { getNotes } from '../api/notes';
+import useCreateNote from '../hooks/useCreateNote';
 import Container from '../components/Container';
 import { ReactComponent as Loading } from '../assets/loading.svg';
 import NewNote from '../components/NewNote';
@@ -11,7 +14,9 @@ function ListNotes() {
   const [searchQuery, setSearchQuery] = React.useState('');
   const [throttledSearchQuery, setThrottledSearchQuery] = React.useState('');
   const [notes, setNotes] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [searchIsLoading, setSearchIsLoading] = React.useState(true);
+  const [{ noteId, error, loading }, doCreatePost] = useCreateNote();
+  const history = useHistory();
 
   const doThrottledSearchQueryCallback = useCallback(
     throttle(500, (searchQuery) => setThrottledSearchQuery(searchQuery)),
@@ -27,21 +32,35 @@ function ListNotes() {
 
   React.useEffect(() => {
     // Get queried notes
-    setIsLoading(true);
+    setSearchIsLoading(true);
     getNotes(throttledSearchQuery).then((notes) => {
       setNotes(notes);
-      setIsLoading(false);
+      setSearchIsLoading(false);
     });
   }, [throttledSearchQuery]);
 
+  React.useEffect(() => {
+    // Forward to created note
+    if (noteId) {
+      cogoToast.success('Note created!', {
+        bar: { style: 'none' },
+      });
+      history.push(`/note/${noteId}`);
+    }
+  }, [noteId, history]);
+
+  if (error) {
+    return <Container>error</Container>;
+  }
+
   return (
     <>
-      <NewNote text="New Note" />
+      <NewNote onNewNoteClick={doCreatePost} text="New Note" />
       <SearchBar
         onSearchBarChange={handleSearchFieldChange}
         searchQuery={searchQuery}
       />
-      {isLoading ? (
+      {searchIsLoading || loading ? (
         <Container>
           <Loading />
         </Container>

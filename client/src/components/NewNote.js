@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const NewNoteButton = styled(NavLink)`
+const NewNoteButton = styled.button`
+  cursor: pointer;
   font-family: MontSerrat;
   font-weight: bold;
   text-decoration: none;
@@ -38,11 +38,14 @@ const NewNoteButton = styled(NavLink)`
 `;
 
 function NewNote(props) {
-  return <NewNoteButton to="/note/">{props.text}</NewNoteButton>;
+  return (
+    <NewNoteButton onClick={props.onNewNoteClick}>{props.text}</NewNoteButton>
+  );
 }
 
 NewNote.propTypes = {
   text: PropTypes.string,
+  onNewNoteClick: PropTypes.func,
 };
 
 export default NewNote;
