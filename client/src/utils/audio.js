@@ -1,4 +1,5 @@
 import io from 'socket.io-client';
+import 'audioworklet-polyfill';
 const port = process.env.REACT_APP_SOCKET_PORT || 4000;
 
 function getSocketURL() {

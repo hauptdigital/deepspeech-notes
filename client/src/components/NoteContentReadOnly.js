@@ -43,7 +43,7 @@ function NoteContentReadOnly(props) {
     scrollReference.current.scrollHeight > 190
       ? setShowFadeoutText(true)
       : setShowFadeoutText(false);
-  }, [props.noteContent.recognizedText]);
+  }, [props.noteRecognizedText]);
 
   return (
     <>
@@ -52,19 +52,17 @@ function NoteContentReadOnly(props) {
         ref={scrollReference}
         placeholder={props.placeholder}
       >
-        {props.noteContent.text !== '' && (
-          <TextChunk>{props.noteContent.text}</TextChunk>
-        )}
-        {props.noteContent.recognizedText !== '' && (
+        {props.noteText !== '' && <TextChunk>{props.noteText}</TextChunk>}
+        {props.noteRecognizedText !== '' && (
           <TransitionGroup component={null} exit={false} appear={true}>
             <CSSTransition
-              key={props.noteContent.text + props.noteContent.recognizedText}
+              key={props.noteText + props.noteRecognizedText}
               nodeRef={newTextRef}
               timeout={300}
               classNames="fadeIn"
             >
               <TextChunk ref={newTextRef} isNew={true}>
-                {props.noteContent.recognizedText}
+                {props.noteRecognizedText}
               </TextChunk>
             </CSSTransition>
           </TransitionGroup>
@@ -75,11 +73,8 @@ function NoteContentReadOnly(props) {
 }
 
 NoteContentReadOnly.propTypes = {
-  noteContent: PropTypes.exact({
-    text: PropTypes.string,
-    recognizedText: PropTypes.string,
-    audioLength: PropTypes.number,
-  }),
+  noteText: PropTypes.string,
+  noteRecognizedText: PropTypes.string,
   placeholder: PropTypes.string,
 };
 

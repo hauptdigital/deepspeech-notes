@@ -36,6 +36,7 @@ const RecordButtonIcon = styled(({ isRecording, ...themeProps }) => (
 ))`
   width: 40px;
   height: 40px;
+  margin: auto;
   & > #gradient-vertical {
     --color-stop-1: ${(props) => props.theme.colors.gradientStart};
     --color-stop-2: ${(props) => props.theme.colors.gradientStop};

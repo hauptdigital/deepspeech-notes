@@ -18,12 +18,7 @@ function GlobalStyle() {
           background-color: ${theme.colors.background};
           color: ${theme.colors.primary};
         }
-        a,
-        a:hover,
-        a:active,
-        a:visited {
-          color: ${theme.colors.primary};
-        }
+
         body::-webkit-scrollbar-track {
           border-radius: 10px;
           background: transparent;
@@ -36,6 +31,18 @@ function GlobalStyle() {
         body::-webkit-scrollbar-thumb {
           border-radius: 10px;
           background-color: ${theme.colors.light};
+        }
+        a,
+        a:hover,
+        a:active,
+        a:visited {
+          color: ${theme.colors.primary};
+        }
+        .ct-toast {
+          color: ${theme.colors.primary};
+          background-color: ${theme.colors.background};
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+          border-radius: 5px;
         }
       `}
     />

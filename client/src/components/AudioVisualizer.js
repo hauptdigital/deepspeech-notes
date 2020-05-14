@@ -35,6 +35,9 @@ function AudioVisualizer(props) {
 
       for (let i = 0; i < bufferLength; i++) {
         barHeight = dataArray[i] / 2;
+        if (barHeight > 80) {
+          barHeight = 80;
+        }
 
         // Draw bar
         canvasContext.fillStyle = theme.colors.secondary;

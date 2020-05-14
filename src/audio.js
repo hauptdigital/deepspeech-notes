@@ -133,7 +133,7 @@ function createStream() {
 function finishStream() {
   if (modelStream) {
     let start = new Date();
-    let text = model.finishStream(modelStream);
+    let text = modelStream.finishStream();
     if (text) {
       if (text === 'i' || text === 'a') {
         // bug in DeepSpeech 0.6 causes silence to be inferred as "i" or "a"
@@ -161,7 +161,7 @@ function intermediateDecode() {
 
 function feedAudioContent(chunk) {
   recordedAudioLength += (chunk.length / 2) * (1 / 16000) * 1000;
-  model.feedAudioContent(modelStream, chunk.slice(0, chunk.length / 2));
+  modelStream.feedAudioContent(chunk);
 }
 
 module.exports = {
