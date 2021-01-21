@@ -27,7 +27,7 @@
     "express": "^4.17.1",
     "mongodb": "^3.5.6",
     "node-vad": "^1.1.4",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.4.0"
   },
   "devDependencies": {
     "concurrently": "^5.1.0",
